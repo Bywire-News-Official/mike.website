@@ -13,9 +13,13 @@ const Home: React.FC<Props> = (props) => {
   return (
     <Layout>
       <div className="page">
-        <h1>QUOTE</h1>
         <main>
-         
+        <div className="page megaMargin p-3">
+        <h1>Building innovative digital solutions</h1>
+        <p>
+        With a knack for disrupting industries, Michael O'Sullivan is a game-changing CEO, transforming the media industry via cutting-edge tech at Bywire News. His approach is rooted in strategy and unrivalled digital prowess—championing decentralisation through blockchain and cryptocurrency. Equipped with an impressive track record in programming, marketing innovation, and driving political campaigns, Michael exhibits an exceptional ability to foresee the bigger picture and execute ambitious plans from zero to one.</p><p> Always at the vanguard of innovation, he's a frontrunner in establishing powerful audience networks, leveraging data analytics, and harnessing machine learning. Renowned for his sharp intellect and crusading spirit, Michael is a highly sought-after candidate for pioneering leadership roles in product management and front-end development.
+        </p>
+      </div>
         </main>
       </div>
       <style jsx>{`

@@ -11,3 +11,16 @@ body {
   p {
     max-width: 35em;
   }
+
+  .megaMargin {
+    margin-top: 4rem;
+    margin-left: 4rem;
+  }
+
+  .bg-light {
+    background-color: white!important;
+}
+
+.nav-link {
+  
+}
