@@ -7,12 +7,12 @@ export const getStaticProps: GetStaticProps = async () => {
   const feed = [
     {
       id: "1",
-      title: "Prisma is the perfect ORM for Next.js",
-      content: "[Prisma](https://github.com/prisma/prisma) and Next.js go _great_ together!",
-      published: false,
+      title: "Welcome to my portfolio website",
+      content: "Hello World! My name is Michael O'Sullivan and this is my website.",
+      published: true,
       author: {
-        name: "Nikolas Burk",
-        email: "burk@prisma.io",
+        name: "Michael O'Sullivan",
+        email: "mo@bywire.news",
       },
     },
   ]
