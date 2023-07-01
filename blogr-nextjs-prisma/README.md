@@ -1,6 +1,6 @@
 # Michael O'Sullivan - Digital Portfolio
 
-This repository houses the code for the professional portfolio of Michael O'Sullivan. Michael is a seasoned professional with a rich background in various sectors, including being the founder of Bywire, Asst AI, Labour Future, Labour Leave, and Labour Digital.
+This repository houses the code for the professional portfolio of Michael O'Sullivan. Michael is a seasoned professional with a rich background in various sectors, including being the founder of Bywire, Asst AI, Labour Future, Labour Leave, and former team member at the Labour Party and Labour Digital.
 
 The portfolio showcases his projects, strengths and capabilities, providing a one-stop view of his professional persona. 
 

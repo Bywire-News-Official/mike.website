@@ -14,19 +14,19 @@ const Header: React.FC = () => {
         <span className="navbar-toggler-icon"></span>
       </button>
       <div className="collapse navbar-collapse" id="navbarNav">
-        <ul className="navbar-nav">
-          <li className="nav-item">
-            <Link href="/">
-              <a className={'nav-link' + (router.pathname === '/' ? ' active' : '')}>Home</a>
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link href="/about">
-              <a className={'nav-link' + (router.pathname === '/about' ? ' active' : '')}>About</a>
-            </Link>
-          </li>
-        </ul>
-      </div>
+  <ul className="navbar-nav ms-auto">
+    <li className="nav-item">
+      <Link href="/">
+        <a className={'nav-link' + (router.pathname === '/' ? ' active' : '')}>Home</a>
+      </Link>
+    </li>
+    <li className="nav-item">
+      <Link href="/about">
+        <a className={'nav-link' + (router.pathname === '/about' ? ' active' : '')}>About</a>
+      </Link>
+    </li>
+  </ul>
+</div>
     </nav>
   );
 }
