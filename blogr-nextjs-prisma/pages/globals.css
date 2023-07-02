@@ -27,6 +27,20 @@ body,p {
     background-color: #ffffff00!important;
 }
 
+.nav-link.active {
+  position: relative;
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -5px; 
+  height: 2px; 
+  width: 100%;
+  background-color: black;
+}
+
 .nav-link {
   margin-right: 3rem;
 }
