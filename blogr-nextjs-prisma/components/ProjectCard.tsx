@@ -6,6 +6,7 @@ interface Project {
   description: string;
   technologies: string[];
   imageURL: string;
+  tags: string[];
 }
 
 const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
@@ -17,6 +18,11 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
       <ul>
         {project.technologies.map((tech, index) => (
           <li key={index}>{tech}</li>
+        ))}
+      </ul>
+      <ul>
+        {project.tags.map((tag, index) => (
+          <li key={index}>{tag}</li>
         ))}
       </ul>
     </div>

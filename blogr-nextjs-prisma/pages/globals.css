@@ -12,7 +12,7 @@ body,p {
     font-family: 'League Spartan', sans-serif;
   }
 
-  p {
+  p.fp {
     max-width: 40em;
   }
 

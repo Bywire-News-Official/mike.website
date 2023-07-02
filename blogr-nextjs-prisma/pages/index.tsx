@@ -34,7 +34,7 @@ const Home: React.FC<Props> = (props) => {
         <div className="page megaMargin p-3 whitebk">
         <h1 className="">{content.title}</h1>
         {content.description.map((paragraph, index) => (
-          <p key={index}>{paragraph}</p>
+          <p className="fp" key={index}>{paragraph}</p>
         ))}
       <p className="my-5 ">
   <Link href="/about"><a>{content.learn}</a></Link>
