@@ -4,6 +4,8 @@ import Layout from "../components/Layout"
 import Post, { PostProps } from "../components/Post"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faFacebook, faTwitter, faLinkedin, faBitcoin } from "@fortawesome/free-brands-svg-icons"
+import Link from "next/link"
+
 
 type Props = {
   feed: PostProps[]
@@ -21,7 +23,8 @@ const Home: React.FC<Props> = (props) => {
       facebook: "https://www.facebook.com/YOUR_FACEBOOK_USERNAME/",
       twitter: "https://twitter.com/YOUR_TWITTER_USERNAME/"
     },
-    bitcoinSign: " Pay me in Bitcoin"
+    bitcoinSign: " Pay me in Bitcoin",
+    learn: "Learn more about me >"
   }
 
   return (
@@ -29,25 +32,35 @@ const Home: React.FC<Props> = (props) => {
       <div className="page">
         <main>
         <div className="page megaMargin p-3 whitebk">
-        <h1>{content.title}</h1>
+        <h1 className="">{content.title}</h1>
         {content.description.map((paragraph, index) => (
           <p key={index}>{paragraph}</p>
         ))}
+      <p className="my-5 ">
+  <Link href="/about"><a>{content.learn}</a></Link>
+</p>
+        <div className="row">
+    <div className="col-auto">
         <div className="social-media-icons">
-          <a href={content.socialMediaLinks.linkedin} target="_blank" rel="noreferrer">
-            <FontAwesomeIcon icon={faLinkedin} size="2x" />
-          </a>
-          <a href={content.socialMediaLinks.facebook} target="_blank" rel="noreferrer">
-            <FontAwesomeIcon icon={faFacebook} size="2x" />
-          </a>
-          <a href={content.socialMediaLinks.twitter} target="_blank" rel="noreferrer">
-            <FontAwesomeIcon icon={faTwitter} size="2x" />
-          </a>
+            <a href={content.socialMediaLinks.linkedin} target="_blank" rel="noreferrer">
+                <FontAwesomeIcon icon={faLinkedin} size="2x" />
+            </a>
+            <a href={content.socialMediaLinks.facebook} target="_blank" rel="noreferrer">
+                <FontAwesomeIcon icon={faFacebook} size="2x" />
+            </a>
+            <a href={content.socialMediaLinks.twitter} target="_blank" rel="noreferrer">
+                <FontAwesomeIcon icon={faTwitter} size="2x" />
+            </a>
         </div>
+    </div>
+    <div className="col-auto">
         <div className="bitcoin-sign">
             <FontAwesomeIcon icon={faBitcoin} size="2x" />
             {content.bitcoinSign}
         </div>
+    </div>
+</div>
+  
       </div>
         </main>
       </div>
@@ -81,6 +94,29 @@ const Home: React.FC<Props> = (props) => {
           font-size: 16px;
           font-weight:bold;
         }
+        .inlineIcons {
+          display: flex;
+  justify-content: space-between; /* Adjusts the space between the children elements, you can change as per your need */
+        }
+        @keyframes typewriter {
+          0% { width: 0; }
+          100% { width: 100%; }
+        }
+
+        .typewriter-text {
+          border-right: 2px solid;
+          white-space: nowrap;
+          overflow: hidden;
+          animation: typewriter 4s steps(44) 0s 1 normal both,
+                     blinkTextCursor 500ms steps(44) 0s 1 normal both;
+        }
+
+        @keyframes blinkTextCursor {
+          0% {border-color: transparent;}
+          50% {border-color: transparent;}
+          100% {border-color: black;}
+        }
+      
       `}</style>
     </Layout>
   )
