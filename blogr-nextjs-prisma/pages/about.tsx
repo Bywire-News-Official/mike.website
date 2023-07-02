@@ -11,7 +11,7 @@ const About: React.FC = () => {
       linkText: "View on Github"
     },
     {
-      title: "Product Management",
+      title: "Product Invention",
       description: "Your description here...",
       link: "https://yourProductLink.com",
       linkText: "View Products"
@@ -58,7 +58,7 @@ const About: React.FC = () => {
               <i className="icon-example"></i>
             </div>
             <div className="col-8">
-              <h2>{item.title}</h2>
+              <h3>{item.title}</h3>
               <p>{item.description}</p>
             </div>
             <div className="col-3">
