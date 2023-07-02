@@ -50,7 +50,7 @@ function Projects() {
 
   return (
     <Layout>
-      <div className="page megaMargin p-3 text-center">
+      <div className="page megaMargin p-3 text-center whitebk">
         <h1>Our Projects</h1>
         <p>
           Browse through our latest software projects and see the diverse range of

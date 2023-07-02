@@ -48,7 +48,7 @@ const About: React.FC = () => {
         <title>About Me | Michael O'Sullivan</title>
         <meta name="description" content="I am a seasoned programmer with the unique ability to tackle intricate technical challenges while crafting websites that exude sleekness and visual allure. I am also a product manager and a designer." />
       </Helmet>
-      <div className="page megaMargin p-3">
+      <div className="page megaMargin p-3 whitebk">
         <h1>About Me</h1>
 
         {content.map((item, index) => (

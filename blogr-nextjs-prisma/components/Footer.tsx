@@ -6,7 +6,7 @@ import styles from './Footer.module.css';
 const Footer = () => {
     return (
         <footer className={`${styles.footer} text-center`}>
-            <div className="container-fluid">
+            <div className="container-fluid whitebk">
             </div>
             <div className="">
                 <p>&copy; {new Date().getFullYear()} Michael O'Sullivan. All rights reserved.</p>

@@ -13,9 +13,9 @@ type Props = {
 
 const Home: React.FC<Props> = (props) => {
   const content = {
-    title: "Building innovative digital solutions",
+    title: "I like to build cool stuff",
     description: [
-      "Hi, I'm Michael O'Sullivan. I lead and innovate in the tech space, particularly where it intersects with media. I use technologies like blockchain and cryptocurrency, and I'm pretty handy with Python programming too.",
+      "Hello World! I'm Michael O'Sullivan. I lead and innovate in the tech space, particularly where it intersects with media. I use technologies like blockchain and cryptocurrency, and I'm pretty handy with Python programming too.",
       "I specialise in product management and front-end web development, and I love using data to drive decisions and innovations. If you're interested in what I can bring to your team, feel free to reach out."
     ],
     socialMediaLinks: {
@@ -23,7 +23,7 @@ const Home: React.FC<Props> = (props) => {
       facebook: "https://www.facebook.com/YOUR_FACEBOOK_USERNAME/",
       twitter: "https://twitter.com/YOUR_TWITTER_USERNAME/"
     },
-    bitcoinSign: " Pay me in Bitcoin",
+    bitcoinSign: "I accept ",
     learn: "Learn more about me >"
   }
 
@@ -36,27 +36,28 @@ const Home: React.FC<Props> = (props) => {
         {content.description.map((paragraph, index) => (
           <p className="fp" key={index}>{paragraph}</p>
         ))}
-      <p className="my-5 ">
+      <p className="my-3">
   <Link href="/about"><a>{content.learn}</a></Link>
 </p>
         <div className="row">
     <div className="col-auto">
         <div className="social-media-icons">
             <a href={content.socialMediaLinks.linkedin} target="_blank" rel="noreferrer">
-                <FontAwesomeIcon icon={faLinkedin} size="2x" />
+                <FontAwesomeIcon icon={faLinkedin} size="1x" />
             </a>
             <a href={content.socialMediaLinks.facebook} target="_blank" rel="noreferrer">
-                <FontAwesomeIcon icon={faFacebook} size="2x" />
+                <FontAwesomeIcon icon={faFacebook} size="1x" />
             </a>
             <a href={content.socialMediaLinks.twitter} target="_blank" rel="noreferrer">
-                <FontAwesomeIcon icon={faTwitter} size="2x" />
+                <FontAwesomeIcon icon={faTwitter} size="1x" />
             </a>
         </div>
     </div>
     <div className="col-auto">
         <div className="bitcoin-sign">
-            <FontAwesomeIcon icon={faBitcoin} size="2x" />
+            
             {content.bitcoinSign}
+            <FontAwesomeIcon icon={faBitcoin} size="1x" />
         </div>
     </div>
 </div>
