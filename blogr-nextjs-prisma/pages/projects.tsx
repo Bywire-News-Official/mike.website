@@ -17,7 +17,7 @@ function Projects() {
     {
       id: 2,
       title: "Scoutbar",
-      description: "Navigation tool that significantly increases efficiency by reducing the number of clicks it takes you to navigate the web.",
+      description: "Navigation tool that significantly increases efficiency.",
       technologies: ["Typescript", "Rollup", "React", "Nextjs"],
       imageURL: "https://i.ibb.co/T0XwFsQ/Screen-Recording-2020-05-06-at-3.gif",
       tags: ['Typescript', 'React']
@@ -40,7 +40,11 @@ function Projects() {
     },
   ];
 
-  const tags = ["All", "React", "Typescript"];
+  // Create a Set (which automatically removes duplicates) from all tags in all projects
+  const allTags = Array.from(new Set(projects.flatMap(project => project.tags)));
+
+  // Add 'All' to the start of the array
+  const tags = ['All', ...allTags];
 
   const filteredProjects = filter === 'All' ? projects : projects.filter(project => project.tags.includes(filter));
 
