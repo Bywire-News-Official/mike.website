@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100;300;400;500;600;700;800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 
-body,p {
+html body,p {
   font-family: 'Poppins', sans-serif;
   line-height: 2;
   background-image: url('/bk.jpg');
@@ -8,11 +8,11 @@ body,p {
   background-size: cover; 
   }
 
-  h1,h2,h3,h4,h5,h6,.nav-link {
+  html body h1,h2,h3,h4,h5,h6,.nav-link {
     font-family: 'League Spartan', sans-serif;
   }
 
-  p.fp {
+  html body p.fp {
     max-width: 40em;
   }
 
@@ -27,11 +27,11 @@ body,p {
     background-color: #ffffff00!important;
 }
 
-.nav-link.active {
+html body .nav-link.active {
   position: relative;
 }
 
-.nav-link.active::after {
+html body .nav-link.active::after {
   content: '';
   position: absolute;
   left: 0;
@@ -41,33 +41,33 @@ body,p {
   background-color: black;
 }
 
-.nav-link {
+html body .nav-link {
   margin-right: 3rem;
 }
 
-h1 {
+html body h1 {
   font-size: 24pt;
 }
 
-.whitebk {
+html body .whitebk {
   background-color: white;
   padding: 5rem;
 }
 
-a {
+html body a {
   color: #4a7f9a;
   text-decoration: none;  /* Optional: Removes underline */
 }
 
-a:hover {
+html body a:hover {
   color: #39677c;  /* Darker blue on hover */
 }
 
-a:active {
+html body a:active {
   color: #2d5065;  /* Even darker blue when active */
 }
 
-a:focus {
+html body a:focus {
   color: #2d5065;  /* Even darker blue when focused */
   outline: none;  /* Optional: Removes outline */
 }
