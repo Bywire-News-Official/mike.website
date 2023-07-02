@@ -29,7 +29,7 @@ type Props = {
 const Blog: React.FC<Props> = (props) => {
   return (
     <Layout>
-      <div className="page">
+      <div className="page megaMargin">
         <h1>Public Feed</h1>
         <main>
           {props.feed.map((post) => (

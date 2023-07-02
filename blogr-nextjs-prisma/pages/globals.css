@@ -13,13 +13,15 @@ body,p {
     max-width: 40em;
   }
 
-  .megaMargin {
-    margin-top: 5rem;
-    margin-left: 5rem;
+  @media only screen and (min-width: 800px) {
+    .megaMargin {
+      margin-top: 5rem;
+      margin-left: 5rem;
+    }
   }
 
   nav.bg-light {
-    background-color: white!important;
+    background-color: #ffffff00!important;
 }
 
 .nav-link {
@@ -30,3 +32,31 @@ h1 {
   font-size: 24pt;
 }
 
+body {
+  background-image: url('/bk.jpg');
+  background-repeat: no-repeat;
+  background-size: cover; 
+}
+
+.whitebk {
+  background-color: white;
+  padding: 5rem;
+}
+
+a {
+  color: #4a7f9a;
+  text-decoration: none;  /* Optional: Removes underline */
+}
+
+a:hover {
+  color: #39677c;  /* Darker blue on hover */
+}
+
+a:active {
+  color: #2d5065;  /* Even darker blue when active */
+}
+
+a:focus {
+  color: #2d5065;  /* Even darker blue when focused */
+  outline: none;  /* Optional: Removes outline */
+}

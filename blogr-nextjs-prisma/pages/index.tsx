@@ -13,22 +13,22 @@ const Home: React.FC<Props> = (props) => {
   const content = {
     title: "Building innovative digital solutions",
     description: [
-      "With a knack for disrupting industries, Michael O'Sullivan is a game-changing CEO, transforming the media industry via cutting-edge tech at Bywire News. His approach is rooted in strategy and unrivalled digital prowess—championing decentralisation through blockchain and cryptocurrency. Equipped with an impressive track record in programming, marketing innovation, and driving political campaigns, Michael exhibits an exceptional ability to foresee the bigger picture and execute ambitious plans from zero to one.",
-      "Always at the vanguard of innovation, he's a frontrunner in establishing powerful audience networks, leveraging data analytics, and harnessing machine learning. Renowned for his sharp intellect and crusading spirit, Michael is a highly sought-after candidate for pioneering leadership roles in product management and front-end development."
+      "Hi, I'm Michael O'Sullivan. I lead and innovate in the tech space, particularly where it intersects with media. I use technologies like blockchain and cryptocurrency, and I'm pretty handy with Python programming too.",
+      "I specialise in product management and front-end web development, and I love using data to drive decisions and innovations. If you're interested in what I can bring to your team, feel free to reach out."
     ],
     socialMediaLinks: {
       linkedin: "https://www.linkedin.com/in/YOUR_LINKEDIN_USERNAME/",
       facebook: "https://www.facebook.com/YOUR_FACEBOOK_USERNAME/",
       twitter: "https://twitter.com/YOUR_TWITTER_USERNAME/"
     },
-    bitcoinSign: "Pay me in Bitcoin"
+    bitcoinSign: " Pay me in Bitcoin"
   }
 
   return (
     <Layout>
       <div className="page">
         <main>
-        <div className="page megaMargin p-3">
+        <div className="page megaMargin p-3 whitebk">
         <h1>{content.title}</h1>
         {content.description.map((paragraph, index) => (
           <p key={index}>{paragraph}</p>
@@ -78,7 +78,7 @@ const Home: React.FC<Props> = (props) => {
           align-items: center;
           margin-top: 20px;
           color: #f7931a; /* Bitcoin's color */
-          font-size: 24px;
+          font-size: 16px;
           font-weight:bold;
         }
       `}</style>
