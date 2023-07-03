@@ -1,4 +1,5 @@
 import React from "react"
+import Image from "next/image"
 import { GetStaticProps } from "next"
 import Layout from "../components/Layout"
 import Post, { PostProps } from "../components/Post"
@@ -30,40 +31,43 @@ const Home: React.FC<Props> = (props) => {
   return (
     <Layout>
       <div className="page">
-        <main>
-        <div className="page megaMargin p-3 whitebk">
-        <h1 className="">{content.title}</h1>
-        {content.description.map((paragraph, index) => (
-          <p className="fp" key={index}>{paragraph}</p>
-        ))}
-      <p className="my-3">
-  <Link href="/about"><a>{content.learn}</a></Link>
-</p>
-        <div className="row">
-    <div className="col-auto">
-        <div className="social-media-icons">
-            <a href={content.socialMediaLinks.linkedin} target="_blank" rel="noreferrer">
-                <FontAwesomeIcon icon={faLinkedin} size="1x" />
-            </a>
-            <a href={content.socialMediaLinks.facebook} target="_blank" rel="noreferrer">
-                <FontAwesomeIcon icon={faFacebook} size="1x" />
-            </a>
-            <a href={content.socialMediaLinks.twitter} target="_blank" rel="noreferrer">
-                <FontAwesomeIcon icon={faTwitter} size="1x" />
-            </a>
+        <div className="row whitebk">
+          <div className="col-md-6">
+            <h1>{content.title}</h1>
+            {content.description.map((paragraph, index) => (
+              <p className="fp" key={index}>{paragraph}</p>
+            ))}
+            <p className="my-3">
+              <Link href="/about"><a>{content.learn}</a></Link>
+            </p>
+            <div className="social-media-icons">
+              <a href={content.socialMediaLinks.linkedin} target="_blank" rel="noreferrer">
+                  <FontAwesomeIcon icon={faLinkedin} size="1x" />
+              </a>
+              <a href={content.socialMediaLinks.facebook} target="_blank" rel="noreferrer">
+                  <FontAwesomeIcon icon={faFacebook} size="1x" />
+              </a>
+              <a href={content.socialMediaLinks.twitter} target="_blank" rel="noreferrer">
+                  <FontAwesomeIcon icon={faTwitter} size="1x" />
+              </a>
+            </div>
+            <div className="bitcoin-sign">
+                {content.bitcoinSign}
+                <FontAwesomeIcon icon={faBitcoin} size="1x" />
+            </div>
+          </div>
+          <div className="col-12 col-md-6">
+            <div className="imageContainer">
+              <Image
+                src="/projects-clients.png"
+                alt="Projects and Clients"
+                layout='fill'
+                objectFit='contain'
+                objectPosition='right'
+              />
+            </div>
+          </div>
         </div>
-    </div>
-    <div className="col-auto">
-        <div className="bitcoin-sign">
-            
-            {content.bitcoinSign}
-            <FontAwesomeIcon icon={faBitcoin} size="1x" />
-        </div>
-    </div>
-</div>
-  
-      </div>
-        </main>
       </div>
       <style jsx>{`
         .post {
@@ -116,6 +120,12 @@ const Home: React.FC<Props> = (props) => {
           0% {border-color: transparent;}
           50% {border-color: transparent;}
           100% {border-color: black;}
+        }
+
+        .imageContainer {
+          position: relative;
+          width: 100%;
+          height: 500px;
         }
       
       `}</style>

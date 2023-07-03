@@ -8,8 +8,8 @@ const Footer = () => {
         <footer className={`${styles.footer} text-center`}>
             <div className="container-fluid whitebk">
             </div>
-            <div className="">
-                <p>&copy; {new Date().getFullYear()} Michael O'Sullivan. All rights reserved.</p>
+            <div className="smallText">
+                <p><small>&copy; {new Date().getFullYear()} Michael O'Sullivan. All rights reserved.</small></p>
             </div>
         </footer>
     );

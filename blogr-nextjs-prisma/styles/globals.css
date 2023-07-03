@@ -114,3 +114,6 @@ html body a:focus {
   padding: 0;
   margin: 0 0 20px 0; /* adjust as needed */
 }
+.smallText {
+  font-size: 12px;
+}

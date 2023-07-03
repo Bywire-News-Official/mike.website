@@ -51,13 +51,13 @@ const Contact: React.FC = () => {
         </div>
         <div className="social-icons mt-3">
           <a className="m-2" href="https://twitter.com/username" target="_blank" rel="noopener noreferrer">
-            <FontAwesomeIcon icon={faTwitter} size="2x" />
+            <FontAwesomeIcon icon={faTwitter} size="1x" />
           </a>
           <a className="m-2" href="https://facebook.com/username" target="_blank" rel="noopener noreferrer">
-            <FontAwesomeIcon icon={faFacebook} size="2x" />
+            <FontAwesomeIcon icon={faFacebook} size="1x" />
           </a>
           <a className="m-2" href="https://instagram.com/username" target="_blank" rel="noopener noreferrer">
-            <FontAwesomeIcon icon={faInstagram} size="2x" />
+            <FontAwesomeIcon icon={faInstagram} size="1x" />
           </a>
         </div>
       </div>
