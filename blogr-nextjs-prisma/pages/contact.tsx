@@ -25,8 +25,8 @@ const Contact: React.FC = () => {
 
     document.body.appendChild(script);
 
-    window.BrevoConversationsID = '64a72ff73bfa944e0430f046';
-    window.BrevoConversations = window.BrevoConversations || function() { (window.BrevoConversations.q = window.BrevoConversations.q || []).push(arguments); };
+    window["BrevoConversationsID"] = "64a72ff73bfa944e0430f046";
+window['BrevoConversations'] = window['BrevoConversations'] || function() { (window['BrevoConversations'].q = window['BrevoConversations'].q || []).push(arguments); };
 
     return () => {
       document.body.removeChild(script);
