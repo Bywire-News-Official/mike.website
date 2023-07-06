@@ -56,7 +56,7 @@ html body .whitebk {
 }
 
 html body a {
-  color: #0f4560;
+  color: #062c48;
   text-decoration: none;  /* Optional: Removes underline */
 }
 
@@ -120,13 +120,13 @@ html body a:focus {
 }
 
 html body .btn-outline-primary {
-  color: #0f4560;
-  border-color: #0f4560;
+  color: #062c48;
+  border-color: #062c48;
   border-radius: 0;
 }
 
 html body .btn-outline-primary:hover {
   color: white;
-  border-color: #0f4560;
-  background-color: #0f4560;
+  border-color: #062c48;
+  background-color: #062c48
 }
