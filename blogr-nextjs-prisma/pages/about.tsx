@@ -1,41 +1,66 @@
 import React from "react";
 import { Helmet } from 'react-helmet';
 import Layout from '../components/Layout';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBolt, faVoteYea, faCogs, faCode } from '@fortawesome/free-solid-svg-icons'
+
 
 const About: React.FC = () => {
+  const content = [
+    {
+      title: "Product Innovation and Management",
+      description: "As the CEO of Bywire news, I've brought blockchain and cryptocurrency technologies to revolutionise the news media landscape. In addition, I am a specialist in optimising existing processes and encourage innovation whenever I can, which proved critical when launching Disrupt and Refine.",
+      link: "https://yourProductLink.com",
+      linkText: "View Products",
+      icon: <FontAwesomeIcon icon={faBolt} />,
+    },
+    {
+      title: "Political Campaigns",
+      description: "I’ve contributed to winning political strategies with my innovative digital campaigning tactics, including psychometric micro-targeting, Machine Learning optimisation and audience demographic segmentation. This includes successful campaigns for Vote Leave and Labour Leave.",
+      link: "#",
+      linkText: "View More",
+      icon: <FontAwesomeIcon icon={faVoteYea} />,
+    },
+    {
+      title: "Leadership and Management",
+      description: "As a leader, my principles are built on collaboration, innovation, and commitment to creating a difference. I have led teams to phenomenal growth by constructing a strategic vision, encouraging innovation and fostering a results-driven culture.",
+      link: "https://open.spotify.com/playlist/yourPlaylist",
+      linkText: "View Playlist",
+      icon: <FontAwesomeIcon icon={faCogs} />,
+    },
+    {
+      title: "Engineering (AI, Python, Front-end)",
+      description: "My foundation in programming, Python and front-end development has driven me to disrupt traditional approaches in software and systems engineering. I've built competencies in fields like Machine Learning, Artificial Intelligence, data analytics, Blockchain and Cryptography.",
+      link: "https://yourWritingsLink.com",
+      linkText: "Visit Page",
+      icon: <FontAwesomeIcon icon={faCode} />,
+    }
+  ];
 
   return (
     <Layout>
       <Helmet>
-        <title>About Me | Technologist</title>
-        <meta name="description" content="Technologist with a unique blend of entrepreneurship, political campaigning, and innovation, leveraging technology and strategy to deliver world-class results in every project." />
-      </Helmet>
-     
-      <div className="page megaMargin p-3 whitebk d-flex flex-row">
-        <div className="col-md-6">
-          <h1>About Me</h1>
+        <title>About Me | Michael O'Sullivan</title>
+        <meta name="description" content="I am a seasoned programmer with the unique ability to tackle intricate technical challenges while crafting websites that exude sleekness and visual allure. I am also a product manager and a designer." />
+        </Helmet>
+      <div className="page megaMargin p-3 whitebk">
+        <h1 className="mb-5">About Me</h1>
 
-          <p>Throughout my career, I have thrived at the intersection of entrepreneurship, political campaigning, and innovation. As a problem-solver deeply rooted in technology and strategy, I amalgamate my diverse skills to deliver world-class results in every project I undertake. </p>
+        {content.map((item, index) => (
+          <div className="row" key={index}>
+            <div className="col-1">
+              {item.icon} 
+            </div>
+            <div className="col-8">
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+            </div>
+            <div className="col-3">
+              <a href={item.link}>{item.linkText}</a>
+            </div>
+          </div>
+        ))}
 
-          <p>My entrepreneurial journey has seen the birth and growth of several successful businesses. Each business has provided a wealth of lessons and victories, offering me the financial freedom to invest in groundbreaking technologies and promising individuals who are poised to make substantive differences in our world. </p>
-
-          <p>My extensive experience in political campaigning is characterised by influential roles in digital campaigning for platforms such as the Labour Party, Labour Future, Vote Leave, and Labour Leave. Tasked with innovating traditional outreach methods my team and I pioneered digital techniques like psychometric micro-targeting and audience demographic segmentation. Our data-driven approach, bolstered by efficient data pipeline synchronisation and Machine Learning integration/optimisation, was key to our success.</p>
-
-          <p>Technology has been a catalyst in enhancing my campaigning efforts. Fluent in machine learning and Python engineering, I built programs capable of improving their data learning models over time. Using my aptitude for strategic thinking and problem-solving, I have developed these solutions to inform decisions and improve campaigns in real time. </p>
-
-          <p>My skills also extend to front-end engineering, where I leveraged my extensive knowledge of HTML/CSS, JavaScript, and its various libraries and frameworks, to ensure that the digital face of our campaigns was not only compelling but also technically sound. </p>
-
-          <p>Additionally, my experiences have sharpened my proficiency in product management. With a meticulous focus on detail and a panoramic view of the product's life cycle, I've successfully managed and launched products, often engineering, designing, and fundraising for them myself. </p>
-
-          <p>One of my notable achievements was the successful launch of the Bywire News app, which rapidly climbed the ranks to become the most-downloaded news app in the UK. This accomplishment underlines my ability to seamlessly tie together entrepreneurship, political campaigning, AI and Python engineering, product management, and innovation into my work. </p>
-
-          <p>In summary, I construct innovative, scalable solutions that deliver exceptional results, unified under the overarching aim to revolutionize how societies work and connect.</p>
-
-        </div>
-        
-        <div className="col-md-6">
-          {/* Space for future content */}
-        </div>
       </div>
     </Layout>
   );
