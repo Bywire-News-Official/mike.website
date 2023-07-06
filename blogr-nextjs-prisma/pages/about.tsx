@@ -56,7 +56,7 @@ const About: React.FC = () => {
               <p>{item.description}</p>
             </div>
             <div className="col-3">
-              <a href={item.link}>{item.linkText}</a>
+            <a href={item.link} target="_blank" rel="noreferrer">{item.linkText}</a>
             </div>
           </div>
         ))}
