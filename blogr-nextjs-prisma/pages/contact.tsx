@@ -36,31 +36,17 @@ window['BrevoConversations'] = window['BrevoConversations'] || function() { (win
   return (
     <Layout>
       <Helmet>
-        <title>Contact Us | Michael O'Sullivan</title>
+        <title>Contact Me | Michael O'Sullivan</title>
         <meta name="description" content="Get in touch with us to discuss your software needs and find out how we can provide solutions that meet your objectives. We are just a click away!" />
       </Helmet>
       <div className="page megaMargin p-3 whitebk">
-        <h1>Contact Us</h1>
+        <h1>Contact Me</h1>
         <div className="row">
           <div className="col-md-6">
             <p>
               Get in touch or shoot me an email directly on <strong>michael@bywire.news</strong>
             </p>
-            <form onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label htmlFor="name">Name:</label>
-                <input type="text" className="form-control" id="name" value={form.name} onChange={handleChange} />
-              </div>
-              <div className="form-group">
-                <label htmlFor="email">Email:</label>
-                <input type="email" className="form-control" id="email" value={form.email} onChange={handleChange} />
-              </div>
-              <div className="form-group">
-                <label htmlFor="message">Message:</label>
-                <textarea className="form-control" id="message" value={form.message} onChange={handleChange} />
-              </div>
-              <button type="submit" className="btn btn-primary btn-lg">Send Message</button>
-            </form>
+           
           </div>
         </div>
         <div className="social-icons mt-3">
