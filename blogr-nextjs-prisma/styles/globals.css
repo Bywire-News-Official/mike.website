@@ -39,7 +39,7 @@ html body .nav-link.active::after {
   bottom: -5px; 
   height: 2px; 
   width: 100%;
-  background-color: #0f4560;
+  background-color: #f47825;
 }
 
 html body .nav-link {
