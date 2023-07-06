@@ -39,7 +39,7 @@ html body .nav-link.active::after {
   bottom: -5px; 
   height: 2px; 
   width: 100%;
-  background-color: black;
+  background-color: #0f4560;
 }
 
 html body .nav-link {
@@ -119,13 +119,13 @@ html body a:focus {
   font-size: 12px;
 }
 
-.btn-outline-primary {
+html body .btn-outline-primary {
   color: #0f4560;
   border-color: #0f4560;
   border-radius: 0;
 }
 
-.btn-outline-primary:hover {
+html body .btn-outline-primary:hover {
   color: white;
   border-color: #0f4560;
   background-color: #0f4560;
