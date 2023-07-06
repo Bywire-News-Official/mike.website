@@ -6,6 +6,7 @@ html body {
   background-image: url('/bk.jpg');
   background-repeat: no-repeat;
   background-size: cover; 
+  font-size: 0.98em;
   }
 
   html body h1,h2,h3,h4,h5,h6,.nav-link {
