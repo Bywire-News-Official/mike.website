@@ -56,20 +56,20 @@ html body .whitebk {
 }
 
 html body a {
-  color: #4a7f9a;
+  color: #0f4560;
   text-decoration: none;  /* Optional: Removes underline */
 }
 
 html body a:hover {
-  color: #39677c;  /* Darker blue on hover */
+  color: #082635;  /* Darker blue on hover */
 }
 
 html body a:active {
-  color: #2d5065;  /* Even darker blue when active */
+  color: #031823;  /* Even darker blue when active */
 }
 
 html body a:focus {
-  color: #2d5065;  /* Even darker blue when focused */
+  color: #031823;  /* Even darker blue when focused */
   outline: none;  /* Optional: Removes outline */
 }
 
@@ -117,4 +117,16 @@ html body a:focus {
 }
 .smallText {
   font-size: 12px;
+}
+
+.btn-outline-primary {
+  color: #0f4560;
+  border-color: #0f4560;
+  border-radius: 0;
+}
+
+.btn-outline-primary:hover {
+  color: white;
+  border-color: #0f4560;
+  background-color: #0f4560;
 }
