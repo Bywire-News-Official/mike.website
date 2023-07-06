@@ -59,7 +59,7 @@ const Home: React.FC<Props> = (props) => {
           <div className="col-12 col-md-6">
             <div className="imageContainer">
               <Image
-                src="/projects-clients.png"
+                src="/eos.png"
                 alt="Projects and Clients"
                 layout='fill'
                 objectFit='contain'
