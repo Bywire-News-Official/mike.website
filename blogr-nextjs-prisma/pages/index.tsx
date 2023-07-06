@@ -24,7 +24,7 @@ const Home: React.FC<Props> = (props) => {
       facebook: "https://www.facebook.com/YOUR_FACEBOOK_USERNAME/",
       twitter: "https://twitter.com/YOUR_TWITTER_USERNAME/"
     },
-    bitcoinSign: "I accept ",
+    bitcoinSign: "Bitcoin Welcome ",
     learn: "Learn more about me >"
   }
 
