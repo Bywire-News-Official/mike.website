@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Helmet } from 'react-helmet';
 import Layout from '../components/Layout';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -17,6 +17,22 @@ const Contact: React.FC = () => {
     // Here you would typically send the form data to your server
   };
 
+  useEffect(() => {
+    const script = document.createElement('script');
+
+    script.src = 'https://conversations-widget.brevo.com/brevo-conversations.js';
+    script.async = true;
+
+    document.body.appendChild(script);
+
+    window.BrevoConversationsID = '64a72ff73bfa944e0430f046';
+    window.BrevoConversations = window.BrevoConversations || function() { (window.BrevoConversations.q = window.BrevoConversations.q || []).push(arguments); };
+
+    return () => {
+      document.body.removeChild(script);
+    }
+  }, []);
+
   return (
     <Layout>
       <Helmet>
@@ -24,14 +40,12 @@ const Contact: React.FC = () => {
         <meta name="description" content="Get in touch with us to discuss your software needs and find out how we can provide solutions that meet your objectives. We are just a click away!" />
       </Helmet>
       <div className="page megaMargin p-3 whitebk">
-      <h1>Contact Us</h1>
-      <div className="row">
+        <h1>Contact Us</h1>
+        <div className="row">
           <div className="col-md-6">
-       
-        <p>
-        Get in touch or shoot me an email directly on <strong>michael@bywire.news</strong>
-        </p>
-       
+            <p>
+              Get in touch or shoot me an email directly on <strong>michael@bywire.news</strong>
+            </p>
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label htmlFor="name">Name:</label>
