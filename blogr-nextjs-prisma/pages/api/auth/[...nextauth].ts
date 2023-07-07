@@ -8,6 +8,7 @@ const authHandler: NextApiHandler = (req, res) => NextAuth(req, res, options);
 export default authHandler;
 
 const options = {
+    site: process.env.NEXTAUTH_URL, // add this line
   providers: [
     GitHubProvider({
       clientId: process.env.GITHUB_ID,
