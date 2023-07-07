@@ -41,7 +41,7 @@ const About: React.FC = () => {
     <Layout>
       <Helmet>
         <title>About Me | Michael O'Sullivan</title>
-        <meta name="description" content="I am a seasoned programmer with the unique ability to tackle intricate technical challenges while crafting websites that exude sleekness and visual allure. I am also a product manager and a designer." />
+        <meta name="description" content="I am a seasoned python programmer with the unique ability to tackle intricate technical challenges while crafting websites that exude sleekness and visual allure. I am also a product manager and a designer." />
         </Helmet>
       <div className="page megaMargin p-3 whitebk">
         <h1 className="mb-5">About Me</h1>
