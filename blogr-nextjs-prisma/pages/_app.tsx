@@ -4,7 +4,14 @@ import React, { useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/globals.css'
 
-function MyApp({ Component, pageProps }: AppProps) {
+// Add this type definition
+type CustomAppProps = AppProps & {
+  pageProps: {
+    session: any;
+  };
+};
+
+function MyApp({ Component, pageProps }: CustomAppProps) {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const bootstrap = require('bootstrap/dist/js/bootstrap'); // Import bootstrap js
@@ -12,8 +19,8 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, []);
   
   return <SessionProvider session={pageProps.session}>
-  <Component {...pageProps} />
-</SessionProvider>
+    <Component {...pageProps} />
+  </SessionProvider>
 }
 
 export default MyApp;
