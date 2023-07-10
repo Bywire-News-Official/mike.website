@@ -1,64 +1,38 @@
-import React from 'react';
-import { GetServerSideProps } from 'next';
+import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import Post, { PostProps } from '../components/Post';
-import prisma from '../lib/prisma';
-import jwt from 'jsonwebtoken';
-import cookie from 'cookie';
+import Router from 'next/router';
 
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const cookies = cookie.parse(req.headers.cookie || '');
-  const token = cookies['token']; // replace with the name of your cookie
+const Drafts: React.FC = () => {
+  const [drafts, setDrafts] = useState([]);
 
-  if (!token) {
-    return {
-      props: { drafts: [] },
-      redirect: {
-        destination: '/login',
-        permanent: false,
-      },
+  useEffect(() => {
+    const fetchDrafts = async () => {
+      const token = localStorage.getItem('token');
+
+      const res = await fetch('/api/auth/drafts', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (res.ok) {
+        const drafts = await res.json();
+        setDrafts(drafts);
+      } else {
+        Router.push('/login');
+      }
     };
-  }
 
-  try {
-    jwt.verify(token, process.env.SECRET_KEY!);
+    fetchDrafts();
+  }, []);
 
-    const drafts = await prisma.post.findMany({
-      where: {
-        published: false,
-      },
-      include: {
-        author: {
-          select: { name: true },
-        },
-      },
-    });
-
-    return {
-      props: { drafts },
-    };
-  } catch (err) {
-    return {
-      props: { drafts: [] },
-      redirect: {
-        destination: '/login',
-        permanent: false,
-      },
-    };
-  }
-};
-
-type Props = {
-  drafts: PostProps[];
-};
-
-const Drafts: React.FC<Props> = (props) => {
   return (
     <Layout>
       <div className="page">
         <h1>My Drafts</h1>
         <main>
-          {props.drafts.map((post) => (
+          {drafts.map((post) => (
             <div key={post.id} className="post">
               <Post post={post} />
             </div>
