@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import prisma from '../../lib/prisma';
+import Router from 'next/router';
 import { GetServerSideProps } from "next";
 import ReactMarkdown from "react-markdown";
 import Layout from "../../components/Layout";
@@ -46,6 +47,26 @@ const Post: React.FC<any> = (props) => {
     }
   };
 
+  const deletePost = async () => {
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(`/api/auth/delete/${props.id}`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      return Router.push('/');
+    } else {
+      // handle error here
+    }
+  };
+
   return (
     <Layout>
       <div>
@@ -55,6 +76,7 @@ const Post: React.FC<any> = (props) => {
         <button onClick={() => publishPost(!published)}>
           {published ? "Unpublish" : "Publish"}
         </button>
+        <button onClick={deletePost}>Delete</button>
       </div>
       <style jsx>{`
         .page {
