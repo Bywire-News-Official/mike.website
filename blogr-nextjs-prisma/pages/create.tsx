@@ -9,35 +9,32 @@ const Draft: React.FC = () => {
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     try {
-      const body = { title, content };
-  
-      // Get the token from cookies
-      const token = document.cookie
-        .split('; ')
-        .find(row => row.startsWith('token'))
-        ?.split('=')[1];
-  
-      console.log("Token: ", token); // Log the token
-  
-      const res = await fetch('/api/post', {
-        method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(body),
-      });
-  
-      if (res.ok) {
-        await Router.push('/drafts');
-      } else {
-        const errorData = await res.json();
-        console.error(errorData);
-      }
+        const body = { title, content };
+
+        // Get the token from local storage
+        const token = localStorage.getItem('token');
+
+        console.log("Token: ", token); // Log the token
+
+        const res = await fetch('/api/auth/post', {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(body),
+        });
+
+        if (res.ok) {
+            await Router.push('/drafts');
+        } else {
+            const errorData = await res.json();
+            console.error(errorData);
+        }
     } catch (error) {
-      console.error(error);
+        console.error(error);
     }
-  };
+};
   
   
 
