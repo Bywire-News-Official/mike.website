@@ -1,20 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link'; 
 import { useRouter } from 'next/router';
 import { signOut, useSession } from 'next-auth/react';
 
 const Header: React.FC = () => {
   const router = useRouter();
-  const { data: session, status } = useSession();
+  const [loggedIn, setLoggedIn] = useState(false);
 
-  // If session loading
-  if (status === 'loading') {
-    return (
-      <nav className="navbar navbar-light bg-light p-3">
-        <p>Validating session ...</p>
-      </nav>
-    );
-  }
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      setLoggedIn(true);
+    }
+  }, []);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light p-3">
@@ -30,7 +27,7 @@ const Header: React.FC = () => {
         <ul className="navbar-nav ms-auto">
           {
             // Only show certain links if user is logged in
-            session && (
+            loggedIn && (
               <>
                 <li className="nav-item">
                   <Link href="/drafts">
@@ -42,14 +39,14 @@ const Header: React.FC = () => {
                     <a className={'nav-link' + (router.pathname === '/create' ? ' active' : '')}>New post</a>
                   </Link>
                 </li>
+                <li className="nav-item">
+                  <Link href="/about">
+                    <a className={'nav-link' + (router.pathname === '/about' ? ' active' : '')}>About</a>
+                  </Link>
+                </li>
               </>
             )
           }
-          <li className="nav-item">
-            <Link href="/about">
-              <a className={'nav-link' + (router.pathname === '/about' ? ' active' : '')}>About</a>
-            </Link>
-          </li>
           <li className="nav-item">
             <Link href="/projects">
               <a className={'nav-link' + (router.pathname === '/projects' ? ' active' : '')}>Projects</a>
@@ -62,19 +59,22 @@ const Header: React.FC = () => {
           </li>
           {
             // If user is logged out, show login link
-            !session && (
+            !loggedIn && (
               <li className="nav-item">
-                <Link href="/api/auth/signin">
-                  <a className={'nav-link' + (router.pathname === '/signup' ? ' active' : '')}>Log in</a>
+                <Link href="/login">
+                  <a className={'nav-link' + (router.pathname === '/login' ? ' active' : '')}>Log in</a>
                 </Link>
               </li>
             )
           }
           {
             // If user is logged in, show logout button
-            session && (
+            loggedIn && (
               <li className="nav-item">
-                <button className="nav-link btn btn-link" onClick={() => signOut()}>
+                <button className="nav-link btn btn-link" onClick={() => {
+                  localStorage.removeItem('token');
+                  setLoggedIn(false);
+                }}>
                   Logout
                 </button>
               </li>
