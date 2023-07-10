@@ -3,6 +3,8 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  console.log(`Request method: ${req.method}`);
+
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method not allowed' });
   }
