@@ -25,6 +25,12 @@ const Header: React.FC = () => {
       </button>
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav ms-auto">
+
+        <li className="nav-item">
+                  <Link href="/about">
+                    <a className={'nav-link' + (router.pathname === '/about' ? ' active' : '')}>About</a>
+                  </Link>
+                </li>
           {
             // Only show certain links if user is logged in
             loggedIn && (
@@ -39,11 +45,7 @@ const Header: React.FC = () => {
                     <a className={'nav-link' + (router.pathname === '/create' ? ' active' : '')}>New post</a>
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <Link href="/about">
-                    <a className={'nav-link' + (router.pathname === '/about' ? ' active' : '')}>About</a>
-                  </Link>
-                </li>
+               
               </>
             )
           }

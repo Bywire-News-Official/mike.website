@@ -1,4 +1,3 @@
-import { SessionProvider } from 'next-auth/react';
 import { AppProps } from "next/app";
 import React, { useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -18,9 +17,7 @@ function MyApp({ Component, pageProps }: CustomAppProps) {
     }
   }, []);
   
-  return <SessionProvider session={pageProps.session}>
-    <Component {...pageProps} />
-  </SessionProvider>
+  return <Component {...pageProps} />
 }
 
 export default MyApp;
