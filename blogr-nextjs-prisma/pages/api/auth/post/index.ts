@@ -23,7 +23,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
       data: {
         title: title,
         content: content,
-        author: { connect: { id: 2 } },
+        author: { connect: { id: '2' } },
       },
     });
 
