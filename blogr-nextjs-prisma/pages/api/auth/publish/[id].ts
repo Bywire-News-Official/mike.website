@@ -12,10 +12,10 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
     const decoded = jwt.verify(token, process.env.SECRET_KEY!);
 
     if (decoded) {
-        const post = await prisma.post.update({
-            where: { id: String(postId) },
-            data: { published: publish },
-          });
+      const post = await prisma.post.update({
+  where: { id: String(postId) },
+  data: { published: publish },
+});
 
       return res.json(post);
     }
