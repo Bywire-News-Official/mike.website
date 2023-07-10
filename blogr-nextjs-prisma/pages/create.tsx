@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import Layout from '../components/Layout';
 import Router from 'next/router';
+import dynamic from 'next/dynamic';
+
+const QuillNoSSRWrapper = dynamic(import('react-quill'), { ssr: false });
 
 const Draft: React.FC = () => {
   const [title, setTitle] = useState('');
@@ -9,34 +12,32 @@ const Draft: React.FC = () => {
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     try {
-        const body = { title, content };
+      const body = { title, content };
 
-        // Get the token from local storage
-        const token = localStorage.getItem('token');
+      // Get the token from local storage
+      const token = localStorage.getItem('token');
 
-        console.log("Token: ", token); // Log the token
+      console.log("Token: ", token); // Log the token
 
-        const res = await fetch('/api/auth/post', {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify(body),
-        });
+      const res = await fetch('/api/auth/post', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(body),
+      });
 
-        if (res.ok) {
-            await Router.push('/drafts');
-        } else {
-            const errorData = await res.json();
-            console.error(errorData);
-        }
+      if (res.ok) {
+        await Router.push('/drafts');
+      } else {
+        const errorData = await res.json();
+        console.error(errorData);
+      }
     } catch (error) {
-        console.error(error);
+      console.error(error);
     }
-};
-  
-  
+  };
 
   return (
     <Layout>
@@ -50,13 +51,7 @@ const Draft: React.FC = () => {
             type="text"
             value={title}
           />
-          <textarea
-            cols={50}
-            onChange={(e) => setContent(e.target.value)}
-            placeholder="Content"
-            rows={8}
-            value={content}
-          />
+          <QuillNoSSRWrapper value={content} onChange={setContent} />
           <input disabled={!content || !title} type="submit" value="Create" />
           <a className="back" href="#" onClick={() => Router.push('/')}>
             or Cancel
@@ -72,8 +67,7 @@ const Draft: React.FC = () => {
           align-items: center;
         }
 
-        input[type='text'],
-        textarea {
+        input[type='text'] {
           width: 100%;
           padding: 0.5rem;
           margin: 0.5rem 0;

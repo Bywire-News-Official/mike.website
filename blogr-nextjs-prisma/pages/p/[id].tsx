@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import prisma from '../../lib/prisma';
 import Router from 'next/router';
 import { GetServerSideProps } from "next";
-import ReactMarkdown from "react-markdown";
 import Layout from "../../components/Layout";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
@@ -58,21 +57,19 @@ const Post: React.FC<any> = (props) => {
       },
     });
 
-    const data = await res.json();
-
     if (res.ok) {
       return Router.push('/');
     } else {
-      // handle error here
+     // handle error here
     }
   };
-
+  
   return (
     <Layout>
       <div>
         <h2>{title}</h2>
         <p>By {props?.author?.name || "Unknown author"}</p>
-        <ReactMarkdown children={props.content} />
+        <div dangerouslySetInnerHTML={{ __html: props.content }} />
         <button onClick={() => publishPost(!published)}>
           {published ? "Unpublish" : "Publish"}
         </button>
