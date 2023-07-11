@@ -28,7 +28,7 @@ const Post: React.FC<any> = (props) => {
   const router = useRouter();
 
   useEffect(() => {
-    const tokenStored = window.localStorage.getItem("token");
+    const tokenStored = window.localStorage.getItem("token"); 
     if (tokenStored) {
       setToken(tokenStored);
     }
@@ -74,7 +74,7 @@ const Post: React.FC<any> = (props) => {
     if (res.ok) {
       return Router.push('/');
     } else {
-     // handle error here
+      // handle error here
     }
   };
   
@@ -88,6 +88,9 @@ const Post: React.FC<any> = (props) => {
                        
                         <h1 className="my-1">{displayTitle}</h1>
                         <p>By {props?.author?.name || "Unknown author"}</p>
+                        <p>Published at: {new Date(props.createdAt).toLocaleString()}. 
+                        &nbsp;Edited at: {new Date(props.updatedAt).toLocaleString()}</p>
+                        {props.image && <img src={props.image} alt={props.title} />}
                         <div dangerouslySetInnerHTML={{ __html: content }} />
                         <br />
                         {token && (
@@ -95,9 +98,7 @@ const Post: React.FC<any> = (props) => {
                             <button className="btn btn-sm btn-outline-primary me-2 mt-1" onClick={() => publishPost(!published)}>
                             {published ? "Unpublish" : "Publish"}
                             </button> 
-                            
                             <button className="btn btn-sm btn-outline-primary me-2 mt-1" onClick={() => {Router.push(`/create?id=${props.id}`);}}>Edit</button>
-                            
                             <button className="btn btn-sm btn-outline-primary me-2 mt-1" onClick={deletePost}>Delete</button>
                         </>
                         )}
