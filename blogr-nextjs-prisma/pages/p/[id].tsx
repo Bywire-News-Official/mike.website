@@ -15,8 +15,22 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       },
     },
   });
+
+  // If the post is not found return a 404 page
+  if (!post) {
+    return {
+      notFound: true
+    };
+  }
+
+  // Convert date objects to string
+  const formattedPost = {
+    ...post,
+    createdAt: post.createdAt.toISOString(),
+  }
+
   return {
-    props: post,
+    props: formattedPost,
   };
 };
 
@@ -74,10 +88,10 @@ const Post: React.FC<any> = (props) => {
     if (res.ok) {
       return Router.push('/');
     } else {
-      // handle error here
+     // handle error here
     }
   };
-  
+
   return (
     <Layout>
         <div className="container">    
@@ -88,8 +102,11 @@ const Post: React.FC<any> = (props) => {
                        
                         <h1 className="my-1">{displayTitle}</h1>
                         <p>By {props?.author?.name || "Unknown author"}</p>
-                        <p>Published at: {new Date(props.createdAt).toLocaleString()}. 
-                        &nbsp;Edited at: {new Date(props.updatedAt).toLocaleString()}</p>
+
+                        {/* Convert strings back to Date objects */}
+                        <p>Published at: {new Date(props.createdAt).toLocaleString()} 
+                     </p>
+
                         {props.image && <img src={props.image} alt={props.title} />}
                         <div dangerouslySetInnerHTML={{ __html: content }} />
                         <br />
@@ -98,7 +115,9 @@ const Post: React.FC<any> = (props) => {
                             <button className="btn btn-sm btn-outline-primary me-2 mt-1" onClick={() => publishPost(!published)}>
                             {published ? "Unpublish" : "Publish"}
                             </button> 
+                            
                             <button className="btn btn-sm btn-outline-primary me-2 mt-1" onClick={() => {Router.push(`/create?id=${props.id}`);}}>Edit</button>
+                            
                             <button className="btn btn-sm btn-outline-primary me-2 mt-1" onClick={deletePost}>Delete</button>
                         </>
                         )}
