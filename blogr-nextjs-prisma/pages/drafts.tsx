@@ -29,7 +29,7 @@ const Drafts: React.FC = () => {
 
   return (
     <Layout>
-      <div className="page">
+      <div className="page megaMargin">
         <h1>My Drafts</h1>
         <main>
           {drafts.map((post) => (
