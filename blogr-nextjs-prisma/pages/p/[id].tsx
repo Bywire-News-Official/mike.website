@@ -25,9 +25,14 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
   // Convert date objects to string
   const formattedPost = {
-    ...post,
+    id: post.id,
+    title: post.title,
+    content: post.content,
+    published: post.published,
     createdAt: post.createdAt.toISOString(),
-  }
+    author: post.author,
+    image: post.image
+  };
 
   return {
     props: formattedPost,
@@ -107,7 +112,7 @@ const Post: React.FC<any> = (props) => {
                         <p>Published at: {new Date(props.createdAt).toLocaleString()} 
                      </p>
 
-                        {props.image && <img src={props.image} alt={props.title} />}
+                        {props.image && <img src={props.image} alt={props.title} className="img-fluid" />}
                         <div dangerouslySetInnerHTML={{ __html: content }} />
                         <br />
                         {token && (

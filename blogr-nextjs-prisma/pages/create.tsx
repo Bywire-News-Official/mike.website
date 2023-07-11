@@ -1,23 +1,25 @@
 import { GetServerSideProps } from 'next';
 import React, { useEffect, useState } from "react";
 import Layout from '../components/Layout';
-import Router, { useRouter } from 'next/router';
+import Router from 'next/router';
 import dynamic from 'next/dynamic';
 import prisma from '../lib/prisma';
 
 const QuillNoSSRWrapper = dynamic(import('react-quill'), { ssr: false });
 
 const PostDraft: React.FC<{ post: any }> = ({ post }) => {
-  const router = useRouter();
 
   const [title, setTitle] = useState(post?.title || "");
   const [content, setContent] = useState(post?.content || "");
+  const [image, setImage] = useState(post?.image || "");
+
   const [token, setToken] = useState(null);
 
   useEffect(() => {
     if (post) {
       setTitle(post.title);
       setContent(post.content);
+      setImage(post.image);
     }
   }, [post]);
 
@@ -30,7 +32,7 @@ const PostDraft: React.FC<{ post: any }> = ({ post }) => {
 
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    const body = { title, content };
+    const body = { title, content, image }; 
     let url = "";
     let method = "";
 
@@ -42,8 +44,6 @@ const PostDraft: React.FC<{ post: any }> = ({ post }) => {
       method = "POST";
     }
 
-    console.log("testing token here: " + token)
-
     const res = await fetch(url, {
       method: method,
       headers: {
@@ -52,9 +52,6 @@ const PostDraft: React.FC<{ post: any }> = ({ post }) => {
       },
       body: JSON.stringify(body),
     });
-
-    console.log('Response', res);
-
 
     if (res.ok) {
       await Router.push(post ? `/p/${post.id}` : "/drafts");
@@ -76,6 +73,12 @@ const PostDraft: React.FC<{ post: any }> = ({ post }) => {
             type="text"
             value={title}
           />
+          <input
+            onChange={(e) => setImage(e.target.value)}
+            placeholder="Image URL"
+            type="text"
+            value={image}
+          />
           <QuillNoSSRWrapper value={content} onChange={setContent} />
           <input disabled={!content || !title} type="submit" value={post ? "Update" : "Create" } />
           <a className="back" href="#" onClick={() => Router.push(post ? `/p/${post.id}` : '/')}>
@@ -83,7 +86,6 @@ const PostDraft: React.FC<{ post: any }> = ({ post }) => {
           </a>
         </form>
       </div>
-
       <style jsx>{`
         .page {
           background: var(--geist-background);
@@ -120,13 +122,20 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   
     if (postId) {
       const post = await prisma.post.findUnique({
-        where: { id: String(postId) }
+        where: { id: String(postId) },
+        select: {
+          id: true,
+          title: true,
+          content: true,
+          published: true,
+          authorId: true
+        }
       });
   
       return { props: { post } };
     }
   
     return { props: {} };
-  };
+};
 
 export default PostDraft;
