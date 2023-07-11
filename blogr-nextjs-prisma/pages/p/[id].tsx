@@ -80,31 +80,41 @@ const Post: React.FC<any> = (props) => {
   
   return (
     <Layout>
-      <div className="megaMargin">
-        <button className="btn btn-sm btn-outline-primary" onClick={() => router.back()}>
-          <i className="fas fa-arrow-left"></i>
-        </button>
-        <h2 className="my-3">{displayTitle}</h2>
-        <p>By {props?.author?.name || "Unknown author"}</p>
-        <div dangerouslySetInnerHTML={{ __html: content }} />
-        <br />
-        {token && (
-          <>
-            <button className="btn btn-sm btn-outline-primary me-2 mt-1" onClick={() => publishPost(!published)}>
-              {published ? "Unpublish" : "Publish"}
-            </button> 
-            
-            <button className="btn btn-sm btn-outline-primary me-2 mt-1" onClick={() => {Router.push(`/create?id=${props.id}`);}}>Edit</button>
-            
-            <button className="btn btn-sm btn-outline-primary me-2 mt-1" onClick={deletePost}>Delete</button>
-          </>
-        )}
-      </div>
-      <style jsx>{`
-        .actions {
-          margin-top: 2rem;
-        }
-      `}</style>
+        <div className="container">    
+            <div className="row mt-1">
+                <div className="col col-md-2"></div>
+                <div className="col-md-8 whitebk">
+                    <div className="">
+                       
+                        <h1 className="my-1">{displayTitle}</h1>
+                        <p>By {props?.author?.name || "Unknown author"}</p>
+                        <div dangerouslySetInnerHTML={{ __html: content }} />
+                        <br />
+                        {token && (
+                        <>
+                            <button className="btn btn-sm btn-outline-primary me-2 mt-1" onClick={() => publishPost(!published)}>
+                            {published ? "Unpublish" : "Publish"}
+                            </button> 
+                            
+                            <button className="btn btn-sm btn-outline-primary me-2 mt-1" onClick={() => {Router.push(`/create?id=${props.id}`);}}>Edit</button>
+                            
+                            <button className="btn btn-sm btn-outline-primary me-2 mt-1" onClick={deletePost}>Delete</button>
+                        </>
+                        )}
+                    </div>
+                </div>
+                <div className="col col-md-2">
+                <button className="btn btn-sm btn-outline-primary" onClick={() => router.back()}>
+                            <i className="fas fa-arrow-left"></i>
+                        </button>
+                </div>
+            </div>
+        </div>
+        <style jsx>{`
+            .actions {
+            margin-top: 2rem;
+            }
+        `}</style>
     </Layout>
   );
 }
