@@ -21,6 +21,8 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 };
 
 const Post: React.FC<any> = (props) => {
+  const [title, setTitle] = useState(props.title);
+  const [content, setContent] = useState(props.content);
   const [published, setPublished] = useState(props.published);
   const [token, setToken] = useState(null);
   const router = useRouter();
@@ -32,9 +34,15 @@ const Post: React.FC<any> = (props) => {
     }
   }, []);
 
-  let title = props.title;
+  useEffect(() => {
+    setTitle(props.title);
+    setContent(props.content);
+    setPublished(props.published);
+  }, [props]);
+
+  let displayTitle = title;
   if (!published) {
-    title = `${title} (Draft)`;
+    displayTitle = `${title} (Draft)`;
   }
 
   const publishPost = async (publish: boolean) => {
@@ -76,9 +84,9 @@ const Post: React.FC<any> = (props) => {
         <button className="btn btn-sm btn-outline-primary" onClick={() => router.back()}>
           <i className="fas fa-arrow-left"></i>
         </button>
-        <h2 className="my-3">{title}</h2>
+        <h2 className="my-3">{displayTitle}</h2>
         <p>By {props?.author?.name || "Unknown author"}</p>
-        <div dangerouslySetInnerHTML={{ __html: props.content }} />
+        <div dangerouslySetInnerHTML={{ __html: content }} />
         <br />
         {token && (
           <>
@@ -86,8 +94,7 @@ const Post: React.FC<any> = (props) => {
               {published ? "Unpublish" : "Publish"}
             </button> 
             
-            <button className="btn btn-sm btn-outline-primary me-2 mt-1" onClick={() => {Router.push(`/post/create?id=${props.id}`);}}>Edit</button>
-
+            <button className="btn btn-sm btn-outline-primary me-2 mt-1" onClick={() => {Router.push(`/create?id=${props.id}`);}}>Edit</button>
             
             <button className="btn btn-sm btn-outline-primary me-2 mt-1" onClick={deletePost}>Delete</button>
           </>

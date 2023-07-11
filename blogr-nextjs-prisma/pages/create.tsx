@@ -15,6 +15,13 @@ const PostDraft: React.FC<{ post: any }> = ({ post }) => {
   const [token, setToken] = useState(null);
 
   useEffect(() => {
+    if (post) {
+      setTitle(post.title);
+      setContent(post.content);
+    }
+  }, [post]);
+
+  useEffect(() => {
     const tokenStored = window.localStorage.getItem("token");
     if (tokenStored) {
       setToken(tokenStored);
@@ -24,17 +31,33 @@ const PostDraft: React.FC<{ post: any }> = ({ post }) => {
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     const body = { title, content };
-    const res = await fetch(post ? `/api/auth/update/${post.id}` : '/api/auth/post', {
-      method: post ? 'PUT' : 'POST',
-      headers: { 
+    let url = "";
+    let method = "";
+
+    if (post) {
+      url = `/api/auth/post/${post.id}`;
+      method = "PUT";
+    } else {
+      url = "/api/auth/post";
+      method = "POST";
+    }
+
+    console.log("testing token here: " + token)
+
+    const res = await fetch(url, {
+      method: method,
+      headers: {
         "Content-Type": "application/json",
-        'Authorization': `Bearer ${token}` 
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(body),
     });
 
+    console.log('Response', res);
+
+
     if (res.ok) {
-      await Router.push(post ? `/post/${post.id}` : '/drafts');
+      await Router.push(post ? `/p/${post.id}` : "/drafts");
     } else {
       const errorData = await res.json();
       console.error(errorData);
@@ -55,7 +78,7 @@ const PostDraft: React.FC<{ post: any }> = ({ post }) => {
           />
           <QuillNoSSRWrapper value={content} onChange={setContent} />
           <input disabled={!content || !title} type="submit" value={post ? "Update" : "Create" } />
-          <a className="back" href="#" onClick={() => Router.push(post ? `/post/${post.id}` : '/')}>
+          <a className="back" href="#" onClick={() => Router.push(post ? `/p/${post.id}` : '/')}>
             or Cancel
           </a>
         </form>
@@ -92,13 +115,18 @@ const PostDraft: React.FC<{ post: any }> = ({ post }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  if (!params?.id) {
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+    const postId = query.id as string;
+  
+    if (postId) {
+      const post = await prisma.post.findUnique({
+        where: { id: String(postId) }
+      });
+  
+      return { props: { post } };
+    }
+  
     return { props: {} };
-  }
-
-  const post = await prisma.post.findUnique({ where: { id: String(params.id) } });
-  return { props: { post } };
-};
+  };
 
 export default PostDraft;

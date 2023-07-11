@@ -3,20 +3,26 @@ import prisma from '../../../../lib/prisma';
 import jwt from 'jsonwebtoken';
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
-  const postId = req.query.id;
-  const { title, content, published } = req.body;
-
-  // Retrieve token and decode userId
-  const token = req.headers.authorization?.split(' ')[1];
-  let decodedToken;
+    console.log("Authorization Header: ", req.headers.authorization); // Add this line
+    const postId = req.query.id;
+    const { title, content, published } = req.body;
   
-  try {
-    decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-  } catch (error) {
-    return res.status(403).json({ error: "Invalid token." });
-  } 
+    // Retrieve token and decode userId
+    const token = req.headers.authorization?.split(' ')[1];
+    let decodedToken;
+    
+    try {
+      decodedToken = jwt.verify(token, process.env.SECRET_KEY);
+      console.log("token: ", token);
+      console.log("decodedToken: ", decodedToken);
+    } catch (error) {
+      console.error("jsonwebtoken error: ", error); // Add this line
+      return res.status(403).json({ error: "Invalid token." });
+    }
+  
 
-  const userId = (decodedToken as any).id;
+    const userId = (decodedToken as any).userId;
+    console.log("User ID", userId);
   
   switch(req.method) {
     case 'PUT':
