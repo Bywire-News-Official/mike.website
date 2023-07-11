@@ -85,7 +85,11 @@ const Post: React.FC<any> = (props) => {
             <button className="btn btn-sm btn-outline-primary me-2 mt-1" onClick={() => publishPost(!published)}>
               {published ? "Unpublish" : "Publish"}
             </button> 
-            <button className="btn btn-sm btn-outline-primary mt-1" onClick={deletePost}>Delete</button>
+            
+            <button className="btn btn-sm btn-outline-primary me-2 mt-1" onClick={() => {Router.push(`/post/create?id=${props.id}`);}}>Edit</button>
+
+            
+            <button className="btn btn-sm btn-outline-primary me-2 mt-1" onClick={deletePost}>Delete</button>
           </>
         )}
       </div>

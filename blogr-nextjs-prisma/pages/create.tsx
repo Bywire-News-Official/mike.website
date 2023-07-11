@@ -1,41 +1,43 @@
-import React, { useState } from 'react';
+import { GetServerSideProps } from 'next';
+import React, { useEffect, useState } from "react";
 import Layout from '../components/Layout';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
+import prisma from '../lib/prisma';
 
 const QuillNoSSRWrapper = dynamic(import('react-quill'), { ssr: false });
 
-const Draft: React.FC = () => {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+const PostDraft: React.FC<{ post: any }> = ({ post }) => {
+  const router = useRouter();
+
+  const [title, setTitle] = useState(post?.title || "");
+  const [content, setContent] = useState(post?.content || "");
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    const tokenStored = window.localStorage.getItem("token");
+    if (tokenStored) {
+      setToken(tokenStored);
+    }
+  }, []);
 
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    try {
-      const body = { title, content };
+    const body = { title, content };
+    const res = await fetch(post ? `/api/auth/update/${post.id}` : '/api/auth/post', {
+      method: post ? 'PUT' : 'POST',
+      headers: { 
+        "Content-Type": "application/json",
+        'Authorization': `Bearer ${token}` 
+      },
+      body: JSON.stringify(body),
+    });
 
-      // Get the token from local storage
-      const token = localStorage.getItem('token');
-
-      console.log("Token: ", token); // Log the token
-
-      const res = await fetch('/api/auth/post', {
-        method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(body),
-      });
-
-      if (res.ok) {
-        await Router.push('/drafts');
-      } else {
-        const errorData = await res.json();
-        console.error(errorData);
-      }
-    } catch (error) {
-      console.error(error);
+    if (res.ok) {
+      await Router.push(post ? `/post/${post.id}` : '/drafts');
+    } else {
+      const errorData = await res.json();
+      console.error(errorData);
     }
   };
 
@@ -43,7 +45,7 @@ const Draft: React.FC = () => {
     <Layout>
       <div>
         <form onSubmit={submitData}>
-          <h1>New Draft</h1>
+          <h1>{post ? "Edit Post" : "New Draft" }</h1>
           <input
             autoFocus
             onChange={(e) => setTitle(e.target.value)}
@@ -52,12 +54,13 @@ const Draft: React.FC = () => {
             value={title}
           />
           <QuillNoSSRWrapper value={content} onChange={setContent} />
-          <input disabled={!content || !title} type="submit" value="Create" />
-          <a className="back" href="#" onClick={() => Router.push('/')}>
+          <input disabled={!content || !title} type="submit" value={post ? "Update" : "Create" } />
+          <a className="back" href="#" onClick={() => Router.push(post ? `/post/${post.id}` : '/')}>
             or Cancel
           </a>
         </form>
       </div>
+
       <style jsx>{`
         .page {
           background: var(--geist-background);
@@ -85,8 +88,17 @@ const Draft: React.FC = () => {
           margin-left: 1rem;
         }
       `}</style>
-    </Layout>
+     </Layout>
   );
 };
 
-export default Draft;
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  if (!params?.id) {
+    return { props: {} };
+  }
+
+  const post = await prisma.post.findUnique({ where: { id: String(params.id) } });
+  return { props: { post } };
+};
+
+export default PostDraft;
