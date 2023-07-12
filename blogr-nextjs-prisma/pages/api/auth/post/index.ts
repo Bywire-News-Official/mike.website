@@ -10,7 +10,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
   }
 
   if (req.method === 'POST') {
-    const { title, content, image, seo } = req.body; // Extract image from the request body
+    const { title, content, image, slug, seo } = req.body; // Extract slug from the request body
 
     let seoData;
 
@@ -37,6 +37,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
           title,
           content,
           image,
+          slug, // Include slug here
           seo: seoData ? { connect: { id: seoData.id } } : undefined,
           author: { connect: { id: decoded.userId } },
         },
@@ -49,7 +50,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
     }
 
   } else if (req.method === 'PUT') {
-    const { id, title, content, image, seo } = req.body;
+    const { id, title, content, image, slug, seo } = req.body; // Extract slug from the request body
 
     let seoData;
 
@@ -77,6 +78,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
           title,
           content,
           image,
+          slug, // Include slug here
           seo: seoData ? { connect: { id: seoData.id } } : undefined,
           author: { connect: { id: decoded.userId } },
         },

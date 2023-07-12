@@ -33,6 +33,8 @@ const PostDraft: React.FC<{ post: any }> = ({ post }) => {
   
     // Generate a slug from the title
     const slug = slugify(title, { lower: true, strict: true });
+console.log("Generated slug: ", slug);
+
   
     const body = { 
       title, 
