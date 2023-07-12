@@ -5,6 +5,8 @@ import Router from 'next/router';
 import dynamic from 'next/dynamic';
 import prisma from '../lib/prisma';
 import stringifySafe from 'json-stringify-safe';
+import slugify from 'slugify';
+
 
 const QuillNoSSRWrapper = dynamic(import('react-quill'), { ssr: false });
 
@@ -27,10 +29,26 @@ const PostDraft: React.FC<{ post: any }> = ({ post }) => {
 
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    const body = { title, content, image, seo: { title: seoTitle, description: seoDescription, keywords: seoKeywords, socialMediaImage } }; 
+  
+    // Generate a slug from the title
+    const slug = slugify(title, { lower: true, strict: true });
+  
+    const body = { 
+      title, 
+      content, 
+      image, 
+      slug,  // Include the slug in your request body
+      seo: { 
+        title: seoTitle, 
+        description: seoDescription, 
+        keywords: seoKeywords, 
+        socialMediaImage 
+      } 
+    }; 
+  
     let url = "";
     let method = "";
-
+  
     if (post) {
       url = `/api/auth/post/${post.id}`;
       method = "PUT";
@@ -38,7 +56,7 @@ const PostDraft: React.FC<{ post: any }> = ({ post }) => {
       url = "/api/auth/post";
       method = "POST";
     }
-
+  
     const res = await fetch(url, {
       method: method,
       headers: {
@@ -47,8 +65,10 @@ const PostDraft: React.FC<{ post: any }> = ({ post }) => {
       },
       body: JSON.stringify(body),
     });
-
+  
     if (res.ok) {
+      // Redirect to the new slug-based route if it's a new post.
+      // Otherwise, redirect to the existing post route.
       await Router.push(post ? `/p/${post.id}` : "/drafts");
     } else {
       const errorData = await res.json();

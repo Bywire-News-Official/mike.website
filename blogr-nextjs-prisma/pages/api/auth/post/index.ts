@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import jwt from 'jsonwebtoken';
 import prisma from '../../../../lib/prisma';
+import slugify from 'slugify';
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
   const token = req.headers.authorization?.split(' ')[1]; // Get the token from the Authorization header
@@ -11,6 +12,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
 
   if (req.method === 'POST') {
     const { title, content, image, seo } = req.body; // Extract image from the request body
+    const slug = slugify(title, { lower: true, strict: true }); // Generate a slug from the title
 
     let seoData;
 
@@ -37,6 +39,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
           title,
           content,
           image,
+          slug,
           seo: seoData ? { connect: { id: seoData.id } } : undefined,
           author: { connect: { id: decoded.userId } },
         },
@@ -50,6 +53,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
 
   } else if (req.method === 'PUT') {
     const { id, title, content, image, seo } = req.body;
+    const slug = slugify(title, { lower: true, strict: true }); // Generate a slug from the title
 
     let seoData;
 
@@ -77,6 +81,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
           title,
           content,
           image,
+          slug,
           seo: seoData ? { connect: { id: seoData.id } } : undefined,
           author: { connect: { id: decoded.userId } },
         },

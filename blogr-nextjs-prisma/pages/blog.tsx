@@ -16,10 +16,10 @@ export const getStaticProps: GetStaticProps = async () => {
     },
   });
 
-  // Convert Date objects to string
   const serializedFeed = feed.map((post: Prisma.PostGetPayload<{include: {author:true}}>) => ({
     ...post,
-    createdAt: new Date(post.createdAt).toISOString(),
+    createdAt: post.createdAt instanceof Date ? post.createdAt.toISOString() : post.createdAt,
+    updatedAt: post.updatedAt instanceof Date ? post.updatedAt.toISOString() : post.updatedAt,
   }));
 
   return {
