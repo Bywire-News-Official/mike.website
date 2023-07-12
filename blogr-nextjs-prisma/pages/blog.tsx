@@ -5,6 +5,13 @@ import { GetStaticProps } from 'next';
 import Layout from '../components/Layout';
 import Post, { PostProps } from '../components/Post';
 import Link from 'next/link';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
+
+
 
 export const getStaticProps: GetStaticProps = async () => {
   const feed = await prisma.post.findMany({
@@ -13,16 +20,21 @@ export const getStaticProps: GetStaticProps = async () => {
       author: {
         select: { name: true },
       },
+      // Include SEO fields if nested
+      seo: true,  
     },
     orderBy: {
       createdAt: 'desc',
     },
   });
 
-  const serializedFeed = feed.map((post: Prisma.PostGetPayload<{include: {author:true}}>) => ({
+  const serializedFeed = feed.map((post: Prisma.PostGetPayload<{include: {author:true, seo: true}}>) => ({
     ...post,
     createdAt: post.createdAt instanceof Date ? post.createdAt.toISOString() : post.createdAt,
     updatedAt: post.updatedAt instanceof Date ? post.updatedAt.toISOString() : post.updatedAt,
+    // Include SEO field if nested
+    seo: post.seo,
+    // No need to include image here
   }));
 
   return {
@@ -32,38 +44,45 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 
+
+
 type Props = {
   feed: PostProps[];
 };
-
 const Blog: React.FC<Props> = ({ feed }) => {
-  const truncate = input => input.length > 100 ? `${input.substring(0, 100)}...` : input;
+  const truncate = input => input.length > 300 ? `${input.substring(0, 300)}...` : input;
 
   return (
     <Layout>
-      <div className="page megaMargin">
+      <Container className="page megaMargin">
          <h1>Public Feed</h1>
          <main>
            {feed.map((post) => (
-             <div key={post.id} className="post p-5">
-               <h2>{post.title}</h2>
-               <div>
-                 Written by{' '}
-                 <Link href="/p/[id]" as={`/p/${post.id}`}>
-                   <a>{post.author.name}</a>
+             <Row key={post.id} className="post p-5 whitebk">
+               <Col md={9} className="post-content">
+                 <h2>{post.title}</h2>
+                 <div>
+                   Written by{' '}
+                   <Link href="/p/[id]" as={`/p/${post.id}`}>
+                     <a>{post.author.name}</a>
+                   </Link>
+                 </div>
+                 <div dangerouslySetInnerHTML={{__html: truncate(post.content)}} />
+                 <div className="mt-3">
+                 <Link href="/p/[slug]" as={`/p/${post.slug}`}>
+                    <a>Read more</a>
                  </Link>
-               </div>
-               <div dangerouslySetInnerHTML={{__html: truncate(post.content)}} />
-               <div className="mt-3">
-               <Link href="/p/[slug]" as={`/p/${post.slug}`}>
-  <a>Read more</a>
-</Link>
-               </div>
-             </div>
+                 </div>
+               </Col>
+               <Col md={3} className="post-image">
+                 {/* Directly access image */}
+                 <img src={post.image} alt={post.title} style={{ width: '100%', height: 'auto' }} />
+               </Col>
+             </Row>
            ))}
          </main>
-       </div>
-       <style jsx>{`
+      </Container>
+      <style jsx>{`
          .post {
            background: white;
            transition: box-shadow 0.1s ease-in;
@@ -78,7 +97,7 @@ const Blog: React.FC<Props> = ({ feed }) => {
          }
        `}</style>
      </Layout>
-   )
+  )
 }
 
 export default Blog;
