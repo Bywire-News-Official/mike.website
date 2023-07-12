@@ -4,6 +4,7 @@ import ReactMarkdown from "react-markdown";
 
 export type PostProps = {
   id: string;
+  slug: string; 
   title: string;
   author: {
     name: string;
@@ -16,7 +17,7 @@ export type PostProps = {
 const Post: React.FC<{ post: PostProps }> = ({ post }) => {
   const authorName = post.author ? post.author.name : "Unknown author";
   return (
-    <div onClick={() => Router.push("/p/[id]", `/p/${post.id}`)}>
+    <div onClick={() => Router.push("/p/[slug]", `/p/${post.slug}`)}> {/* Use post.slug here instead of post.id */}
       <h2>{post.title}</h2>
       <small>By {authorName}</small>
       <ReactMarkdown children={post.content} />

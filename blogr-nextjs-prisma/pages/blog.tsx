@@ -51,9 +51,9 @@ const Blog: React.FC<Props> = ({ feed }) => {
                </div>
                <div dangerouslySetInnerHTML={{__html: truncate(post.content)}} />
                <div className="mt-3">
-                 <Link href="/p/[id]" as={`/p/${post.id}`}>
-                   <a>Read more</a>
-                 </Link>
+               <Link href="/p/[slug]" as={`/p/${post.slug}`}>
+  <a>Read more</a>
+</Link>
                </div>
              </div>
            ))}

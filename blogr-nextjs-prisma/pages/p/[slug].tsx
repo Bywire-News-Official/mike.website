@@ -8,7 +8,7 @@ import Head from 'next/head';
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const post = await prisma.post.findUnique({
     where: {
-      id: String(params?.id),
+      slug: String(params?.slug),
     },
     include: {
       author: {
@@ -38,10 +38,12 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     seoDescription: post.seo?.description || null,
     seoKeywords: post.seo?.keywords || null,
     socialMediaImage: post.seo?.socialMediaImage || null,
+    slug: post.slug
   };
 
   return { props: formattedPost };
 };
+
 
 const Post: React.FC<any> = (props) => {
   const [title, setTitle] = useState(props.title);

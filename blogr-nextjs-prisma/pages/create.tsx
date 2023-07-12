@@ -14,6 +14,7 @@ const PostDraft: React.FC<{ post: any }> = ({ post }) => {
   const [title, setTitle] = useState(post?.title || "");
   const [content, setContent] = useState(post?.content || "");
   const [image, setImage] = useState(post?.image || "");
+  const [slug, setSlug] = useState(post?.slug || "");
   const [seoTitle, setSeoTitle] = useState(post?.seo?.title || "");
   const [seoDescription, setSeoDescription] = useState(post?.seo?.description || "");
   const [seoKeywords, setSeoKeywords] = useState(post?.seo?.keywords || "");

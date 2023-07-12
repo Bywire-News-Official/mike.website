@@ -7,7 +7,7 @@ export default async function handle(
   res: NextApiResponse
 ) {
   const postId = req.query.id;
-  const { title, content, image, seo } = req.body;
+  const { title, content, image, slug, seo } = req.body;
 
   // Retrieve token and decode userId
   const token = req.headers.authorization?.split(" ")[1];
@@ -26,7 +26,7 @@ export default async function handle(
         try {
             const updatedPost = await prisma.post.update({
               where: { id: String(postId) },
-              data: { title, content, image },
+              data: { title, content, image, slug },
             });
           
             let postWithSEO: any = updatedPost;
