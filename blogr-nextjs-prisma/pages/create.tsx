@@ -8,20 +8,14 @@ import prisma from '../lib/prisma';
 const QuillNoSSRWrapper = dynamic(import('react-quill'), { ssr: false });
 
 const PostDraft: React.FC<{ post: any }> = ({ post }) => {
-
   const [title, setTitle] = useState(post?.title || "");
   const [content, setContent] = useState(post?.content || "");
   const [image, setImage] = useState(post?.image || "");
-
+  const [seoTitle, setSeoTitle] = useState(post?.seo?.title || "");
+  const [seoDescription, setSeoDescription] = useState(post?.seo?.description || "");
+  const [seoKeywords, setSeoKeywords] = useState(post?.seo?.keywords || "");
+  const [socialMediaImage, setSocialMediaImage] = useState(post?.seo?.socialMediaImage || "");
   const [token, setToken] = useState(null);
-
-  useEffect(() => {
-    if (post) {
-      setTitle(post.title);
-      setContent(post.content);
-      setImage(post.image);
-    }
-  }, [post]);
 
   useEffect(() => {
     const tokenStored = window.localStorage.getItem("token");
@@ -32,7 +26,7 @@ const PostDraft: React.FC<{ post: any }> = ({ post }) => {
 
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    const body = { title, content, image }; 
+    const body = { title, content, image, seo: { title: seoTitle, description: seoDescription, keywords: seoKeywords, socialMediaImage } }; 
     let url = "";
     let method = "";
 
@@ -79,6 +73,31 @@ const PostDraft: React.FC<{ post: any }> = ({ post }) => {
             type="text"
             value={image}
           />
+          {/* New SEO fields */}
+          <input
+            onChange={(e) => setSeoTitle(e.target.value)}
+            placeholder="SEO Title"
+            type="text"
+            value={seoTitle}
+          />
+          <input
+            onChange={(e) => setSeoDescription(e.target.value)}
+            placeholder="SEO Description"
+            type="text"
+            value={seoDescription}
+          />
+          <input
+            onChange={(e) => setSeoKeywords(e.target.value)}
+            placeholder="SEO Keywords"
+            type="text"
+            value={seoKeywords}
+          />
+          <input
+            onChange={(e) => setSocialMediaImage(e.target.value)}
+            placeholder="Social Media Image URL"
+            type="text"
+            value={socialMediaImage}
+          />
           <QuillNoSSRWrapper value={content} onChange={setContent} />
           <input disabled={!content || !title} type="submit" value={post ? "Update" : "Create" } />
           <a className="back" href="#" onClick={() => Router.push(post ? `/p/${post.id}` : '/')}>
@@ -123,19 +142,25 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     if (postId) {
       const post = await prisma.post.findUnique({
         where: { id: String(postId) },
-        select: {
-          id: true,
-          title: true,
-          content: true,
-          published: true,
-          authorId: true
+        include: { 
+          seo: true
         }
       });
   
+      // Convert Date object to ISO string
+      if (post?.createdAt) {
+        post.createdAt = post.createdAt.toISOString();
+      }
+      
+      // Do the same for updatedAt, if it exists
+      if (post?.updatedAt) {
+        post.updatedAt = post.updatedAt.toISOString();
+      }
+  
       return { props: { post } };
     }
-  
-    return { props: {} };
-};
+    
+      return { props: {} };
+  };
 
 export default PostDraft;

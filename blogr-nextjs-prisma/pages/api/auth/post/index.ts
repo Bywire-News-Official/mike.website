@@ -10,17 +10,36 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
   }
 
   if (req.method === 'POST') {
-    const { title, content, image } = req.body; // Extract image from the request body
+    const { title, content, image, seo } = req.body; // Extract image from the request body
+
+    let seoData;
+
+    if (seo) {
+      try {
+        if (seo.id) {
+          seoData = await prisma.sEO.update({
+            where: { id: seo.id },
+            data: { ...seo },
+          });
+        } else {
+          seoData = await prisma.sEO.create({ data: { ...seo } });
+        }
+      } catch (error){
+        console.log(error);
+        return res.status(500).json({ error: 'An error occurred while updating SEO data.' });
+      }
+    }
 
     try {
       const decoded = jwt.verify(token, process.env.SECRET_KEY!);
       const post = await prisma.post.create({
-          data: {
-            title: title,
-            content: content,
-            image: image,
-            author: { connect: { id: decoded.userId } },
-          },
+        data: {
+          title,
+          content,
+          image,
+          seo: seoData ? { connect: { id: seoData.id } } : undefined,
+          author: { connect: { id: decoded.userId } },
+        },
       });
 
       return res.status(200).json(post);
@@ -28,19 +47,39 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
       console.error(err);
       return res.status(500).json({ error: 'An error occurred while creating the post.' });
     }
+
   } else if (req.method === 'PUT') {
-    const { id, title, content, image } = req.body; 
+    const { id, title, content, image, seo } = req.body;
+
+    let seoData;
+
+    if (seo) {
+      try {
+        if (seo.id) {
+          seoData = await prisma.sEO.update({
+            where: { id: seo.id },
+            data: { ...seo },
+          });
+        } else {
+          seoData = await prisma.sEO.create({ data: { ...seo } });
+        }
+      } catch (error){
+        console.log(error);
+        return res.status(500).json({ error: 'An error occurred while updating SEO data.' });
+      }
+    }
 
     try {
       const decoded = jwt.verify(token, process.env.SECRET_KEY!);
       const post = await prisma.post.update({
-          where: { id: id },
-          data: {
-            title: title,
-            content: content,
-            image: image,
-            author: { connect: { id: decoded.userId } },
-          },
+        where: { id },
+        data: {
+          title,
+          content,
+          image,
+          seo: seoData ? { connect: { id: seoData.id } } : undefined,
+          author: { connect: { id: decoded.userId } },
+        },
       });
 
       return res.status(200).json(post);

@@ -3,6 +3,7 @@ import prisma from '../../lib/prisma';
 import Router, { useRouter } from 'next/router';
 import { GetServerSideProps } from "next";
 import Layout from "../../components/Layout";
+import Head from 'next/head';
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const post = await prisma.post.findUnique({
@@ -13,6 +14,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       author: {
         select: { name: true },
       },
+      seo: true
     },
   });
 
@@ -23,7 +25,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     };
   }
 
-  // Convert date objects to string
+  // handle SEO details when they might be null
   const formattedPost = {
     id: post.id,
     title: post.title,
@@ -31,12 +33,14 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     published: post.published,
     createdAt: post.createdAt.toISOString(),
     author: post.author,
-    image: post.image
+    image: post.image,
+    seoTitle: post.seo?.title || null,
+    seoDescription: post.seo?.description || null,
+    seoKeywords: post.seo?.keywords || null,
+    socialMediaImage: post.seo?.socialMediaImage || null,
   };
 
-  return {
-    props: formattedPost,
-  };
+  return { props: formattedPost };
 };
 
 const Post: React.FC<any> = (props) => {
@@ -73,12 +77,7 @@ const Post: React.FC<any> = (props) => {
       },
       body: JSON.stringify({ publish }),
     });
-
-    if (res.ok) {
-      setPublished(publish);
-    } else {
-      // handle error here
-    }
+    if (res.ok) { setPublished(publish); }
   };
 
   const deletePost = async () => {
@@ -89,57 +88,52 @@ const Post: React.FC<any> = (props) => {
         Authorization: `Bearer ${token}`
       },
     });
-
-    if (res.ok) {
-      return Router.push('/');
-    } else {
-     // handle error here
-    }
+    if (res.ok) { return Router.push('/'); }
   };
 
   return (
     <Layout>
-        <div className="container">    
-            <div className="row mt-1">
-                <div className="col col-md-2"></div>
-                <div className="col-md-8 whitebk">
-                    <div className="">
-                       
-                        <h1 className="my-1">{displayTitle}</h1>
-                        <p>By {props?.author?.name || "Unknown author"}</p>
-
-                        {/* Convert strings back to Date objects */}
-                        <p>Published at: {new Date(props.createdAt).toLocaleString()} 
-                     </p>
-
-                        {props.image && <img src={props.image} alt={props.title} className="img-fluid" />}
-                        <div dangerouslySetInnerHTML={{ __html: content }} />
-                        <br />
-                        {token && (
-                        <>
-                            <button className="btn btn-sm btn-outline-primary me-2 mt-1" onClick={() => publishPost(!published)}>
-                            {published ? "Unpublish" : "Publish"}
-                            </button> 
-                            
-                            <button className="btn btn-sm btn-outline-primary me-2 mt-1" onClick={() => {Router.push(`/create?id=${props.id}`);}}>Edit</button>
-                            
-                            <button className="btn btn-sm btn-outline-primary me-2 mt-1" onClick={deletePost}>Delete</button>
-                        </>
-                        )}
-                    </div>
-                </div>
-                <div className="col col-md-2">
-                <button className="btn btn-sm btn-outline-primary" onClick={() => router.back()}>
-                            <i className="fas fa-arrow-left"></i>
-                        </button>
-                </div>
+      <Head>
+        <title>{props.seoTitle}</title>
+        <meta name="description" content={props.seoDescription} />
+        <meta name="keywords" content={props.seoKeywords} />
+        {props.socialMediaImage && <meta property="og:image" content={props.socialMediaImage} />}
+      </Head>
+      <div className="container">    
+        <div className="row mt-1">
+          <div className="col col-md-2"></div>
+          <div className="col-md-8 whitebk">
+            <div className="">
+              <h1 className="my-1">{displayTitle}</h1>
+              <p>By {props?.author?.name || "Unknown author"}</p>
+              <p>Published at: {new Date(props.createdAt).toLocaleString()} 
+              </p>
+              {props.image && <img src={props.image} alt={props.title} className="img-fluid" />}
+              <div dangerouslySetInnerHTML={{ __html: content }} />
+              <br />
+              {token && (
+              <>
+                <button className="btn btn-sm btn-outline-primary me-2 mt-1" onClick={() => publishPost(!published)}>
+                {published ? "Unpublish" : "Publish"}
+                </button> 
+                <button className="btn btn-sm btn-outline-primary me-2 mt-1" onClick={() => {Router.push(`/create?id=${props.id}`);}}>Edit</button>
+                <button className="btn btn-sm btn-outline-primary me-2 mt-1" onClick={deletePost}>Delete</button>
+              </>
+              )}
             </div>
+          </div>
+          <div className="col col-md-2">
+            <button className="btn btn-sm btn-outline-primary" onClick={() => router.back()}>
+              <i className="fas fa-arrow-left"></i>
+            </button>
+          </div>
         </div>
-        <style jsx>{`
-            .actions {
-            margin-top: 2rem;
-            }
-        `}</style>
+      </div>
+      <style jsx>{`
+        .actions {
+          margin-top: 2rem;
+        }
+      `}</style>
     </Layout>
   );
 }

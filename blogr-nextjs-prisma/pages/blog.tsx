@@ -1,46 +1,46 @@
-import React from "react";
+import { Prisma } from '@prisma/client';
+import React from 'react';
 import prisma from '../lib/prisma';
-import { GetStaticProps } from "next";
-import Layout from "../components/Layout";
-import Post, { PostProps } from "../components/Post";
-import Link from "next/link";
+import { GetStaticProps } from 'next';
+import Layout from '../components/Layout';
+import Post, { PostProps } from '../components/Post';
+import Link from 'next/link';
 
 export const getStaticProps: GetStaticProps = async () => {
-   const feed = await prisma.post.findMany({
-     where: { published: true },
-     include: {
-       author: {
-         select: { name: true },
-       },
-     },
-   });
+  const feed = await prisma.post.findMany({
+    where: { published: true },
+    include: {
+      author: {
+        select: { name: true },
+      },
+    },
+  });
 
-   // Convert Date objects to string
-   const serializedFeed = JSON.parse(JSON.stringify(feed));
-   serializedFeed.forEach((post) => {
-     post.createdAt = new Date(post.createdAt).toISOString();
-     post.updatedAt = new Date(post.updatedAt).toISOString();
-   });
+  // Convert Date objects to string
+  const serializedFeed = feed.map((post: Prisma.PostGetPayload<{include: {author:true}}>) => ({
+    ...post,
+    createdAt: new Date(post.createdAt).toISOString(),
+  }));
 
-   return {
-     props: { feed: serializedFeed },
-     revalidate: 10,
-   };
+  return {
+    props: { feed: serializedFeed },
+    revalidate: 10,
+   }
 };
 
 type Props = {
   feed: PostProps[];
 };
 
-const Blog: React.FC<Props> = (props) => {
-   const truncate = (input) => input.length > 100 ? `${input.substring(0, 100)}...` : input;
+const Blog: React.FC<Props> = ({ feed }) => {
+  const truncate = input => input.length > 100 ? `${input.substring(0, 100)}...` : input;
 
-   return (
-     <Layout>
-       <div className="page megaMargin">
+  return (
+    <Layout>
+      <div className="page megaMargin">
          <h1>Public Feed</h1>
          <main>
-           {props.feed.map((post) => (
+           {feed.map((post) => (
              <div key={post.id} className="post p-5">
                <h2>{post.title}</h2>
                <div>
