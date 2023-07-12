@@ -12,7 +12,9 @@ export type PostProps = {
   } | null;
   content: string;
   published: boolean;
+  image?: string;  // Add image field as optional
 };
+
 
 const Post: React.FC<{ post: PostProps }> = ({ post }) => {
   const authorName = post.author ? post.author.name : "Unknown author";

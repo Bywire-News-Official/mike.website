@@ -34,7 +34,8 @@ export const getStaticProps: GetStaticProps = async () => {
     updatedAt: post.updatedAt instanceof Date ? post.updatedAt.toISOString() : post.updatedAt,
     // Include SEO field if nested
     seo: post.seo,
-    // No need to include image here
+    // Include image field
+    image: post.image,
   }));
 
   return {
@@ -42,6 +43,7 @@ export const getStaticProps: GetStaticProps = async () => {
     revalidate: 10,
   }
 };
+
 
 
 
