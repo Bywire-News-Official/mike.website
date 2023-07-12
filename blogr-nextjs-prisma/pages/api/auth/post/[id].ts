@@ -23,34 +23,36 @@ export default async function handle(
 
   switch (req.method) {
     case "PUT":
-      try {
-        const updatedPost = await prisma.post.update({
-          where: { id: String(postId) },
-          data: { title, content, image },
-        });
-
-        if (updatedPost && seo) {
-          const updatedSEO = await prisma.sEO.update({
-            where: { id: updatedPost.seoId },
-            data: { ...seo },
-          });
-
-          updatedPost.seo = updatedSEO;
-        }
-
-        if (updatedPost) {
-          return res.json(updatedPost);
-        } else {
-          res.status(500).json({
-            error: `An error occurred: Could not find post with id: ${postId}`,
-          });
-        }
-      } catch (error) {
-        res.status(500).json({
-          error: `An error occurred: ${error.message}`,
-          stack: error.stack,
-        });
-      }
+        try {
+            const updatedPost = await prisma.post.update({
+              where: { id: String(postId) },
+              data: { title, content, image },
+            });
+        
+            let postWithSEO = updatedPost;
+        
+            if (updatedPost && seo) {
+              const updatedSEO = await prisma.sEO.update({
+                where: { id: updatedPost.seoId },
+                data: { ...seo },
+              });
+        
+              postWithSEO = { ...updatedPost, seo: updatedSEO };
+            }
+        
+            if (postWithSEO) {
+              return res.json(postWithSEO);
+            } else {
+              res.status(500).json({
+                error: `An error occurred: Could not find post with id: ${postId}`,
+              });
+            }
+          } catch (error) {
+            res.status(500).json({
+              error: `An error occurred: ${error.message}`,
+              stack: error.stack,
+            });
+          }
       break;
 
     default:
