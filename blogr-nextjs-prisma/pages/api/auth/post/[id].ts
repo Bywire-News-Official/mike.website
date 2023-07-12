@@ -28,18 +28,18 @@ export default async function handle(
               where: { id: String(postId) },
               data: { title, content, image },
             });
-        
-            let postWithSEO = updatedPost;
-        
+          
+            let postWithSEO: any = updatedPost;
+          
             if (updatedPost && seo) {
               const updatedSEO = await prisma.sEO.update({
                 where: { id: updatedPost.seoId },
                 data: { ...seo },
               });
-        
-              postWithSEO = { ...updatedPost, seo: updatedSEO };
+          
+              postWithSEO.seo = updatedSEO;
             }
-        
+          
             if (postWithSEO) {
               return res.json(postWithSEO);
             } else {
