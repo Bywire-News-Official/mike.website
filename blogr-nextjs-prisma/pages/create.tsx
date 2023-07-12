@@ -4,6 +4,7 @@ import Layout from '../components/Layout';
 import Router from 'next/router';
 import dynamic from 'next/dynamic';
 import prisma from '../lib/prisma';
+import stringifySafe from 'json-stringify-safe';
 
 const QuillNoSSRWrapper = dynamic(import('react-quill'), { ssr: false });
 
@@ -138,29 +139,22 @@ const PostDraft: React.FC<{ post: any }> = ({ post }) => {
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     const postId = query.id as string;
-  
+    
     if (postId) {
-      const post = await prisma.post.findUnique({
+      let post = await prisma.post.findUnique({
         where: { id: String(postId) },
-        include: { 
-          seo: true
-        }
+        include: { seo: true },
       });
-  
-      // Convert Date object to ISO string
-      if (post?.createdAt) {
-        post.createdAt = post.createdAt.toISOString();
-      }
       
-      // Do the same for updatedAt, if it exists
-      if (post?.updatedAt) {
-        post.updatedAt = post.updatedAt.toISOString();
-      }
-  
+      // Convert the post object to JSON with stringifySafe
+      const postStringified = stringifySafe(post);
+      // Parse the stringified post back into post
+      post = JSON.parse(postStringified);
+      
       return { props: { post } };
     }
     
-      return { props: {} };
+    return { props: {} };
   };
-
-export default PostDraft;
+  
+  export default PostDraft;
