@@ -14,6 +14,9 @@ export const getStaticProps: GetStaticProps = async () => {
         select: { name: true },
       },
     },
+    orderBy: {
+      createdAt: 'desc',
+    },
   });
 
   const serializedFeed = feed.map((post: Prisma.PostGetPayload<{include: {author:true}}>) => ({
@@ -25,8 +28,9 @@ export const getStaticProps: GetStaticProps = async () => {
   return {
     props: { feed: serializedFeed },
     revalidate: 10,
-   }
+  }
 };
+
 
 type Props = {
   feed: PostProps[];
