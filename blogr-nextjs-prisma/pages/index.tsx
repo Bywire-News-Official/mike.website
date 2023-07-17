@@ -32,7 +32,7 @@ const Home: React.FC<Props> = (props) => {
     <Layout>
     <div className="page">
       <div className="row whitebk">
-        <div className="col-md-5">
+        <div className="col-lg-6 col-md-12">
           <h1>{content.title}</h1>
           {content.description.map((paragraph, index) => (
             <p className="fp" key={index}>{paragraph}</p>
@@ -40,8 +40,8 @@ const Home: React.FC<Props> = (props) => {
           <p className="my-3">
             <Link href="/about"><a>{content.learn}</a></Link>
           </p>
-          <div className="row align-items-center">
-  <div className="col-auto">
+          <div className="row mb-2">
+  <div className="col-md-12">
     <div className="social-media-icons">
       <a href="https://www.linkedin.com/in/heavymossman/" target="_blank" rel="noreferrer">
           <FontAwesomeIcon icon={faLinkedin} size="1x" />
@@ -52,23 +52,22 @@ const Home: React.FC<Props> = (props) => {
       <a href="https://twitter.com/bywirenews" target="_blank" rel="noreferrer">
           <FontAwesomeIcon icon={faTwitter} size="1x" />
       </a>
-    </div>
-  </div>
-  <div className="col-auto">
-    <div className="bitcoin-sign">
+      <div className="bitcoin-sign">
         {content.bitcoinSign}
         <FontAwesomeIcon icon={faBitcoin} size="1x" />
     </div>
+    </div>
   </div>
+  
 </div></div>
-        <div className="col-12 col-md-7">
+<div className="col"></div>
+        <div className="col-12 col-md-12 col-lg-5">
           <div className="imageContainer">
             <Image
               src="/eos.png"
               alt="Projects and Clients"
-              layout='fill'
-              objectFit='contain'
-              objectPosition='right'
+              width={1500}
+              height={1500}
             />
           </div>
         </div>
@@ -105,10 +104,6 @@ const Home: React.FC<Props> = (props) => {
       }
 
       .bitcoin-sign {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        margin-top: 20px;
         color: #f7931a; /* Bitcoin's color */
         font-size: 16px;
         font-weight:bold;
@@ -136,11 +131,6 @@ justify-content: space-between; /* Adjusts the space between the children elemen
         100% {border-color: black;}
       }
 
-      .imageContainer {
-        position: relative;
-        width: 100%;
-        height: 500px;
-      }
     `}</style>
   </Layout>
   )
