@@ -62,21 +62,23 @@ function Projects() {
 
   return (
     <Layout>
-      <div className="page megaMargin p-3 text-center whitebk">
+      <div className="page p-3 text-center whitebk">
         <h1>Projects</h1>
-        <div style={{maxWidth: '70ch', margin: '0 auto'}}>
-        <p>
+     
+        <p style={{maxWidth: '70ch', margin: '0 auto'}}>
           Embark on a journey through the heart of innovation, where you'll find an array of software solutions meticulously crafted, each with distinct objectives and unique challenges. As a solo developer, each line of code signifies my devotion to detail and passion for pushing the boundaries. These projects are not just products of technology, they're reflections of creativity and perseverance, illustrating the diversity of potentials that technology can unlock. Browse through and explore where imagination meets code.
         </p>
-      </div>
+     
         <div className="buttons-bar my-3">
           {tags.map(tag => (
             <button className="btn btn-outline-primary m-2" onClick={() => setFilter(tag)}>{tag}</button>
           ))}
         </div>
-        <div className="projects-grid" style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gridColumnGap: '20px'}}>
+        <div className="row">
           {filteredProjects.map(project => (
-            <ProjectCard key={project.id} project={project} />
+            <div className="col-sm-12 col-md-12 col-lg-6 mb-3 mt-3">
+              <ProjectCard key={project.id} project={project} />
+            </div>
           ))}
         </div>
       </div>
