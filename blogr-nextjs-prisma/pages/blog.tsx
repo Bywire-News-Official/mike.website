@@ -60,7 +60,7 @@ const Blog: React.FC<Props> = ({ feed }) => {
          <h1>Public Feed</h1>
          <main>
          {feed.map((post) => (
-          <Row key={post.id} className="post p-5 whitebk">
+          <Row key={post.id} className="post p-2 whitebk">
             <Col md={9} className="post-content">
               <Link href="/p/[slug]" as={`/p/${post.slug}`}>
                 <a><h2>{post.title}</h2></a>
@@ -74,7 +74,7 @@ const Blog: React.FC<Props> = ({ feed }) => {
               <Link href="/p/[slug]" as={`/p/${post.slug}`}>
                 <a><div dangerouslySetInnerHTML={{__html: truncate(post.content)}} /></a>
               </Link>
-              <div className="mt-3">
+              <div className="my-3">
                 <Link href="/p/[slug]" as={`/p/${post.slug}`}>
                   <a>Read more</a>
                 </Link>
@@ -85,6 +85,7 @@ const Blog: React.FC<Props> = ({ feed }) => {
               <Link href="/p/[slug]" as={`/p/${post.slug}`}>
                 <a><img src={post.image} alt={post.title} style={{ width: '100%', height: 'auto' }} /></a>
               </Link>
+              <hr className='my-5' />
             </Col>
           </Row>
         ))}
