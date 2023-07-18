@@ -7,7 +7,6 @@ import prisma from '../lib/prisma';
 import stringifySafe from 'json-stringify-safe';
 import slugify from 'slugify';
 
-// Import Quill and the Quill Snow theme CSS
 import 'react-quill/dist/quill.snow.css';
 import 'highlight.js/styles/github.css'; // or another style if you prefer
 
