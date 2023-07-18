@@ -4,7 +4,7 @@ const LoadingScreen = ({ setLoadingDone }) => {
   const messages = [
     "Loading...",
     "MO V2.0 DOS Version GUI Version",
-    "Web V3.3 System Master 1983....Update...2023...",
+    "Web V3.3 System Master 1983...Update...2023...",
     "Initiate Connection",
     "Connection started...HTML...CSS...JS...",
     "PretendLoading V 1.34",
