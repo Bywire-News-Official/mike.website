@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import LoadingScreen from '../components/LoadingScreen';
 import Image from "next/image"
 import Layout from "../components/Layout"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -6,6 +7,7 @@ import { faFacebook, faTwitter, faLinkedin, faBitcoin } from "@fortawesome/free-
 import Link from "next/link"
 
 const Home = () => {
+    const [loadingDone, setLoadingDone] = useState(false);
     const [index, setIndex] = useState(0);
     const [subIndex, setSubIndex] = useState(0);
     const [blink, setBlink] = useState(true);
@@ -13,6 +15,8 @@ const Home = () => {
     const [isEnd, setIsEnd] = useState(false);
     const [flash, setFlash] = useState(0);
 
+
+  
     const text = "I Like To Build Cool Stuff..."
 
     const words = text.split(" ");
@@ -50,6 +54,11 @@ const Home = () => {
             return () => clearTimeout(timeout);
         }
     }, [isEnd, blink]);
+
+    if (!loadingDone) {
+      return <LoadingScreen setLoadingDone={setLoadingDone} />;
+    }
+  
 
     const content = {
         description: [
