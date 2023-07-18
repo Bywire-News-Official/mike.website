@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 const LoadingScreen = ({ setLoadingDone }) => {
   const messages = [
     "Loading...",
-    "Hit Enter to skip...MO V2.0 DOS Version GUI Version",
+    "Hit enter or touch to skip...MO V2.0 DOS Version GUI Version",
     "Web V3.3 System Master 1983...Update...2023...",
     "Initiate Connection",
     "Connection started...HTML...CSS...JS...",

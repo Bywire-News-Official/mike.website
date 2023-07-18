@@ -7,8 +7,34 @@ import prisma from '../lib/prisma';
 import stringifySafe from 'json-stringify-safe';
 import slugify from 'slugify';
 
+// Import Quill and the Quill Snow theme CSS
+import 'react-quill/dist/quill.snow.css';
+import 'highlight.js/styles/github.css'; // or another style if you prefer
 
-const QuillNoSSRWrapper = dynamic(import('react-quill'), { ssr: false });
+const toolbarOptions = [
+  ['bold', 'italic', 'underline', 'strike'], 
+  ['blockquote', 'code-block'], 
+  [{ 'list': 'ordered'}, { 'list': 'bullet' }], 
+  [{ 'indent': '-1'}, { 'indent': '+1' }], 
+  [{ 'direction': 'rtl' }], 
+  [{ 'color': [] }, { 'background': [] }],
+  [{ 'align': [] }], 
+  ['clean']                                         
+];
+
+const modules = {
+  toolbar: toolbarOptions,
+  syntax: true, // Include syntax module
+};
+
+const QuillNoSSRWrapper = dynamic(
+  import('react-quill').then((quill) => {
+    return () => {
+      return <quill.default theme="snow" modules={modules} />;
+    };
+  }),
+  { ssr: false }
+);
 
 const PostDraft: React.FC<{ post: any }> = ({ post }) => {
   const [title, setTitle] = useState(post?.title || "");
@@ -31,16 +57,13 @@ const PostDraft: React.FC<{ post: any }> = ({ post }) => {
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault();
   
-    // Generate a slug from the title
     const slug = slugify(title, { lower: true, strict: true });
-console.log("Generated slug: ", slug);
-
   
     const body = { 
       title, 
       content, 
       image, 
-      slug,  // Include the slug in your request body
+      slug,  
       seo: { 
         title: seoTitle, 
         description: seoDescription, 
@@ -70,8 +93,6 @@ console.log("Generated slug: ", slug);
     });
   
     if (res.ok) {
-      // Redirect to the new slug-based route if it's a new post.
-      // Otherwise, redirect to the existing post route.
       await Router.push(post ? `/p/${post.id}` : "/drafts");
     } else {
       const errorData = await res.json();
@@ -97,7 +118,6 @@ console.log("Generated slug: ", slug);
             type="text"
             value={image}
           />
-          {/* New SEO fields */}
           <input
             onChange={(e) => setSeoTitle(e.target.value)}
             placeholder="SEO Title"
@@ -169,9 +189,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
         include: { seo: true },
       });
       
-      // Convert the post object to JSON with stringifySafe
       const postStringified = stringifySafe(post);
-      // Parse the stringified post back into post
       post = JSON.parse(postStringified);
       
       return { props: { post } };
@@ -180,4 +198,4 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     return { props: {} };
   };
   
-  export default PostDraft;
+export default PostDraft;
