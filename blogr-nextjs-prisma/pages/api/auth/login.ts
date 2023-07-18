@@ -19,8 +19,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     password: '$2a$10$zJ2q1Pv6GqC7Y4Bv1vQy1Oxyg1oepDwKnmDLa88KAmLTmHTCpS3f2' // Hashed Password
   }
 
-  console.log(`Submitted password: ${password}`);
-  console.log(`Hashed password from DB: ${user.password}`);
 
   if (bcrypt.compareSync(password, user.password)) {
     // Password is correct, issue a JWT
