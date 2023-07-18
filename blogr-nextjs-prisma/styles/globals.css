@@ -129,3 +129,19 @@ html body .btn-outline-primary:hover {
   border-color: #062c48;
   background-color: #062c48
 }
+
+.animate-character {
+  /* CSS Text Animation Effect */
+  background: #000;
+  color: #fff;
+  font-size: 80pt;
+  animation: textclip 2s linear infinite;
+  -webkit-background-clip: text;
+  display: inline-block;
+}
+
+@keyframes textclip {
+  to {
+    background-position: 200% center;
+  }
+}

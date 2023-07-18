@@ -59,29 +59,35 @@ const Blog: React.FC<Props> = ({ feed }) => {
       <Container className="page megaMargin">
          <h1>Public Feed</h1>
          <main>
-           {feed.map((post) => (
-             <Row key={post.id} className="post p-5 whitebk">
-               <Col md={9} className="post-content">
-                 <h2>{post.title}</h2>
-                 <div>
-                   Written by{' '}
-                   <Link href="/p/[id]" as={`/p/${post.id}`}>
-                     <a>{post.author.name}</a>
-                   </Link>
-                 </div>
-                 <div dangerouslySetInnerHTML={{__html: truncate(post.content)}} />
-                 <div className="mt-3">
-                 <Link href="/p/[slug]" as={`/p/${post.slug}`}>
-                    <a>Read more</a>
-                 </Link>
-                 </div>
-               </Col>
-               <Col md={3} className="post-image">
-                 {/* Directly access image */}
-                 <img src={post.image} alt={post.title} style={{ width: '100%', height: 'auto' }} />
-               </Col>
-             </Row>
-           ))}
+         {feed.map((post) => (
+          <Row key={post.id} className="post p-5 whitebk">
+            <Col md={9} className="post-content">
+              <Link href="/p/[slug]" as={`/p/${post.slug}`}>
+                <a><h2>{post.title}</h2></a>
+              </Link>
+              <div>
+                Written by{' '}
+                <Link href="/p/[id]" as={`/p/${post.id}`}>
+                  <a>{post.author.name}</a>
+                </Link>
+              </div>
+              <Link href="/p/[slug]" as={`/p/${post.slug}`}>
+                <a><div dangerouslySetInnerHTML={{__html: truncate(post.content)}} /></a>
+              </Link>
+              <div className="mt-3">
+                <Link href="/p/[slug]" as={`/p/${post.slug}`}>
+                  <a>Read more</a>
+                </Link>
+              </div>
+            </Col>
+            <Col md={3} className="post-image">
+              {/* Directly access image */}
+              <Link href="/p/[slug]" as={`/p/${post.slug}`}>
+                <a><img src={post.image} alt={post.title} style={{ width: '100%', height: 'auto' }} /></a>
+              </Link>
+            </Col>
+          </Row>
+        ))}
          </main>
       </Container>
       <style jsx>{`
