@@ -1,7 +1,6 @@
 import React from "react";
 import Router from "next/router";
 import ReactMarkdown from "react-markdown";
-import Link from 'next/link'; // Add this line
 
 export type PostProps = {
   id: string;
@@ -16,17 +15,14 @@ export type PostProps = {
   image?: string;  // Add image field as optional
 };
 
+
 const Post: React.FC<{ post: PostProps }> = ({ post }) => {
   const authorName = post.author ? post.author.name : "Unknown author";
   return (
     <div onClick={() => Router.push("/p/[slug]", `/p/${post.slug}`)}> {/* Use post.slug here instead of post.id */}
-      <Link href={`/p/${post.slug}`}> {/* Wrap the title in a Link component */}
-        <a><h2>{post.title}</h2></a>
-      </Link>
+      <h2>{post.title}</h2>
       <small>By {authorName}</small>
-      <Link href={`/p/${post.slug}`}> {/* Wrap the content in a Link component */}
-        <a><ReactMarkdown children={post.content} /></a>
-      </Link>
+      <ReactMarkdown children={post.content} />
       <style jsx>{`
         div {
           color: inherit;

@@ -5,14 +5,15 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-
-      
-
+          <script
+            defer
+            data-domain="mike.website"
+            src="https://plausible.io/js/script.js"
+          />
         </Head>
         <body>
           <Main />
           <NextScript />
-        
         </body>
       </Html>
     );
