@@ -29,12 +29,14 @@ const modules = {
 
 const QuillNoSSRWrapper = dynamic(
   import('react-quill').then((quill) => {
-    return () => {
-      return <quill.default theme="snow" modules={modules} />;
+    return (props) => { // Take props as parameter
+      return <quill.default {...props} theme="snow" modules={modules} />;
+      // Pass the props to quill.default
     };
   }),
   { ssr: false }
 );
+
 
 const PostDraft: React.FC<{ post: any }> = ({ post }) => {
   const [title, setTitle] = useState(post?.title || "");
