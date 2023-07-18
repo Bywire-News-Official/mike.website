@@ -110,7 +110,7 @@ const Post: React.FC<any> = (props) => {
               <p>By {props?.author?.name || "Unknown author"}</p>
               <p>Published at: {new Date(props.createdAt).toLocaleString()} 
               </p>
-              {props.image && <img src={props.image} alt={props.title} className="img-fluid" />}
+              {props.image && <img src={props.image} alt={props.title} className="img-fluid mb-5" />}
               <div dangerouslySetInnerHTML={{ __html: content }} />
               <br />
               {token && (
