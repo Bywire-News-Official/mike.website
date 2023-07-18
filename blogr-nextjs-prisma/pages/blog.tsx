@@ -52,7 +52,7 @@ type Props = {
   feed: PostProps[];
 };
 const Blog: React.FC<Props> = ({ feed }) => {
-  const truncate = input => input.length > 300 ? `${input.substring(0, 300)}...` : input;
+  const truncate = input => input.length > 240 ? `${input.substring(0, 240)}...` : input;
 
   return (
     <Layout>
@@ -60,8 +60,8 @@ const Blog: React.FC<Props> = ({ feed }) => {
          <h1>Public Feed</h1>
          <main>
          {feed.map((post) => (
-          <Row key={post.id} className="post p-2 whitebk">
-            <Col md={9} className="post-content">
+          <Row key={post.id} className="post p-2 whitebk my-5">
+            <Col md={8} className="post-content">
               <Link href="/p/[slug]" as={`/p/${post.slug}`}>
                 <a><h2>{post.title}</h2></a>
               </Link>
@@ -80,6 +80,7 @@ const Blog: React.FC<Props> = ({ feed }) => {
                 </Link>
               </div>
             </Col>
+            <Col md={1}></Col>
             <Col md={3} className="post-image">
               {/* Directly access image */}
               <Link href="/p/[slug]" as={`/p/${post.slug}`}>
