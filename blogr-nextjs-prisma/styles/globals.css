@@ -49,10 +49,25 @@ html body .nav-link {
 }
 
 
+
 html body .whitebk {
   background-color: white;
-  padding: 5rem;
 }
+
+
+@media only screen and (min-width: 700px) {
+  .whitebk {
+    padding: 5rem;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .whitebk {
+    padding: 2rem;
+  }
+}
+
+
 
 html body a {
   color: #062c48;

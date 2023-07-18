@@ -67,9 +67,9 @@ const Home = () => {
 
     return (
         <Layout>
-            <div className="page">
+            <div className="">
                 <div className="row whitebk">
-                    <div className="col-lg-6 col-md-12">
+                    <div className=" col-12 col-lg-6 col-md-12">
                         <h1>
                             {`${words.slice(0, index).join(" ")} ${words[index].slice(0, subIndex)}${isEnd ? "." : ""}${blink ? "|" : " "}`}
                         </h1>
