@@ -5,7 +5,6 @@ import Layout from "../components/Layout"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faFacebook, faTwitter, faLinkedin, faBitcoin } from "@fortawesome/free-brands-svg-icons"
 import Link from "next/link"
-import { Helmet } from 'react-helmet';
 
 
 const Home = () => {
@@ -79,11 +78,7 @@ const Home = () => {
     return (
         
         <Layout>
-          <Helmet>
-          <title>Michael O'Sullivan's Website</title>
-        <meta name="description" content="This is Michael O'Sullivan, the founder and CEO of Bywire News, personal website. He loves technology, innovation, and Python programming." />
-        <meta name="keywords" content="Michael O'Sullivan, Bywire, UK Fact Check Politics, Technology, Innovation, Python, Programming" />
-      </Helmet>
+        
      
             <div className="">
                 <div className="row whitebk">
