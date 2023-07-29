@@ -5,9 +5,6 @@
 html body {
   font-family: 'Poppins', sans-serif;
   line-height: 2;
-  background-image: url('/bk.jpg');
-  background-repeat: no-repeat;
-  background-size: cover; 
   font-size: 0.98em;
   }
 
