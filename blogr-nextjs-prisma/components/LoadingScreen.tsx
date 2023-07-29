@@ -2,18 +2,18 @@ import React, { useEffect, useState, useRef } from 'react';
 
 const LoadingScreen = ({ setLoadingDone }) => {
   const messages = [
-    "Loading...",
-    "Hit enter or touch to skip...MO V2.0 DOS Version GUI Version",
-    "Web V3.3 System Master 1983...Update...2023...",
-    "Initiate Connection",
-    "Connection started...HTML...CSS...JS...",
-    "PretendLoading V 1.34",
-    "Start console...",
-    "Clear",
-    "Hello world.",
-    "Welcome to Mike.website.",
-    "Click anywhere or hit Enter to start!"
-  ];
+    "Apple II start sequence initiated...",
+    "Hit enter or touch to skip...",
+    "Loading ProDOS 2.4.1...",
+    "Initializing hardware...",
+    "Display: 40 columns, 24 rows...",
+    "Reading BASIC.SYSTEM...",
+    "Loading BASIC interpreter...",
+    "Clear screen...",
+    "Hello, world.",
+    "Welcome to the digital realm of Michael O'Sullivan.",
+    "Press any key or click anywhere to start exploring!"
+  ];  
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const [displayedMessages, setDisplayedMessages] = useState([]);
   const [charIndex, setCharIndex] = useState(0);

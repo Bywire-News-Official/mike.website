@@ -17,9 +17,7 @@ class MyDocument extends Document {
             src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/highlight.min.js" 
             strategy="afterInteractive"
           />
-                  <title>Michael O'Sullivcan's Website - Bywire News, Labour Party, UK Fact Check Politics</title>
-                  <meta name="description" content="This is Michael O'Sullivan, the founder and CEO of Bywire News, personal website. He loves technology, innovation, and Python programming." />
-
+                
         </Head>
         <body>
           <Main />
