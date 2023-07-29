@@ -84,7 +84,7 @@ const LoadingScreen = ({ setLoadingDone }) => {
       <style jsx>{`
         .loading-screen {
           background-color: black;
-          color: darkgreen;
+          color: lightgreen;
           height: 100vh;
           width: 100vw;
           display: flex;
