@@ -9,7 +9,7 @@ const LoadingScreen = ({ setLoadingDone }) => {
     "Display: 40 columns, 24 rows...",
     "Reading BASIC.SYSTEM...",
     "Loading BASIC interpreter...",
-    "Clear screen...",
+    "Clear",
     "Hello, world.",
     "Welcome to the digital realm of Michael O'Sullivan.",
     "Press any key or click anywhere to start exploring!"
