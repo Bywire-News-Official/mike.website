@@ -1,18 +1,22 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
+import Script from 'next/script';
 
 class MyDocument extends Document {
   render() {
     return (
       <Html>
         <Head>
-          <script
-            defer
-            data-domain="mike.website"
+          <Script
             src="https://plausible.io/js/script.js"
+            data-domain="mike.website"
+            strategy="beforeInteractive"
           />
           {/* Add the highlight.js library */}
           <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/default.min.css" />
-          <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/highlight.min.js"></script>
+          <Script 
+            src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/highlight.min.js" 
+            strategy="beforeInteractive"
+          />
         </Head>
         <body>
           <Main />
