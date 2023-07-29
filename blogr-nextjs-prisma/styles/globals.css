@@ -160,3 +160,7 @@ html body .btn-outline-primary:hover {
     background-position: 200% center;
   }
 }
+
+.findmemate {
+  display: none;
+}
