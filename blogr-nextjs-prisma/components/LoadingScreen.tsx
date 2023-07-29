@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 const LoadingScreen = ({ setLoadingDone }) => {
   const messages = [
@@ -17,18 +17,28 @@ const LoadingScreen = ({ setLoadingDone }) => {
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const [displayedMessages, setDisplayedMessages] = useState([]);
   const [charIndex, setCharIndex] = useState(0);
+  const [frameCount, setFrameCount] = useState(0);
+
+  const requestRef = useRef(0);
+
+  const animate = () => {
+    setFrameCount((prevCount) => prevCount + 1);
+
+    if (frameCount % 10 === 0) {
+      setCharIndex((prevIndex) => prevIndex + 1);
+    }
+
+    requestRef.current = requestAnimationFrame(animate);
+  };
 
   useEffect(() => {
     if (currentMessageIndex >= messages.length) {
       return;
     }
 
-    const timeoutId = setTimeout(() => {
-      setCharIndex((prevIndex) => prevIndex + 1);
-    }, 120);
-
-    return () => clearTimeout(timeoutId);
-  }, [charIndex, currentMessageIndex]);
+    requestRef.current = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(requestRef.current);
+  }, [charIndex, currentMessageIndex, frameCount]);
 
   useEffect(() => {
     if (charIndex === messages[currentMessageIndex]?.length) {
@@ -39,6 +49,7 @@ const LoadingScreen = ({ setLoadingDone }) => {
       }
       setCurrentMessageIndex(currentMessageIndex + 1);
       setCharIndex(0);
+      setFrameCount(0);
     }
   }, [charIndex, currentMessageIndex]);
 
@@ -73,7 +84,7 @@ const LoadingScreen = ({ setLoadingDone }) => {
       <style jsx>{`
         .loading-screen {
           background-color: black;
-          color: green;
+          color: darkgreen;
           height: 100vh;
           width: 100vw;
           display: flex;
